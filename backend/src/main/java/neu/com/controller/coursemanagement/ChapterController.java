@@ -47,7 +47,7 @@ public class ChapterController {
 
     @DeleteMapping("/{chapterId}")
     public Object deleteChapter(@PathVariable("chapterId") Long chapterId) {
-        return chapterService.deleteChapter( chapterId);
+        return chapterService.deleteChapter(chapterId);
     }
 
 

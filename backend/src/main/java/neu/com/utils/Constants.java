@@ -97,7 +97,7 @@ public class Constants {
 
     public static final String IS_NOT_DELETED = "is_deleted=false";
 
-    public static final String UPDATE_IS_DELETED ="UPDATE ad_user SET is_deleted = yes";
+    public static final String UPDATE_IS_DELETED = "UPDATE ad_user SET is_deleted = yes";
 
     /* Sample value */
     public static final int SAMPLE_CREATEDBY = 0;
