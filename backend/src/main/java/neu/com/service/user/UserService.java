@@ -18,4 +18,6 @@ public interface UserService {
     UserResponseVO createUser(UserCreateRequestVO userCreateRequestVO,Long roleId);
 
     UserResponseVO deleteUser(Long userId);
+
+    Object getPagingUserReport(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging);
 }

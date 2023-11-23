@@ -3,11 +3,13 @@ package neu.com.service.user;
 import com.naharoo.commons.mapstruct.MappingFacade;
 import neu.com.configuration.exception.InvalidInputRequestException;
 import neu.com.model.Role;
+import neu.com.model.Transaction;
 import neu.com.model.Tutor;
 import neu.com.model.User;
 import neu.com.repository.RoleRepository;
 import neu.com.repository.TutorRepository;
 import neu.com.repository.UserRepository;
+import neu.com.utils.Constants;
 import neu.com.utils.common.ResponseUtil;
 import neu.com.vo.request.SortingAndPagingRequestVO;
 import neu.com.vo.request.course.FindUserRequestVo;
@@ -15,6 +17,7 @@ import neu.com.vo.request.course.UserCreateRequestVO;
 import neu.com.vo.response.PagedResult;
 import neu.com.vo.response.course.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,6 +35,9 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     @Autowired
     private MappingFacade mapper;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @Override
     public PagedResult<UserResponseVO> getPagingCourse(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging) {
@@ -80,7 +86,7 @@ public class UserServiceImpl implements UserService {
         user.setUserAddress(userUpdateRequestVO.getUserAddress());
         user.setUserEmail(userUpdateRequestVO.getUserEmail());
         user.setUserName(userUpdateRequestVO.getUserName());
-        user.setUserPhone(user.getUserPhone());
+        user.setUserPassword(encoder.encode(Constants.DEFAULT_PASSWORD));
         userRepository.save(user);
         return mapper.map(user, UserResponseVO.class);
     }
@@ -101,7 +107,7 @@ public class UserServiceImpl implements UserService {
         User user = mapper.map(userCreateRequestVO, User.class);
         List<Role> listRole = new ArrayList<>();
         listRole.add(roleOptional.get());
-        user.setUserPassword("123456");
+        user.setUserPassword(encoder.encode(Constants.DEFAULT_PASSWORD));
         user.setRoles(listRole);
         userRepository.save(user);
         if (roleId.equals(2L)) {
@@ -124,6 +130,25 @@ public class UserServiceImpl implements UserService {
         User user = userOptional.get();
         userRepository.delete(user);
         return mapper.map(user, UserResponseVO.class);
+    }
+
+    @Override
+    public PagedResult<UserReportResponseVO> getPagingUserReport(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging) {
+        PagedResult<UserReportResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
+                pageable -> userRepository.findUsersByUserName(findUserRequestVo, pageable),
+                data -> {
+                    List<UserReportResponseVO> userReportResponseVOList = mapper.mapAsList(data, UserReportResponseVO.class);
+                    userReportResponseVOList.forEach(
+                            userReportResponseVO -> {
+                                userReportResponseVO.setTotalCourse(Long.valueOf(userReportResponseVO.getEnrollments().size()));
+                                userReportResponseVO.setTotalPay(userReportResponseVO.getTransactions().stream()
+                                        .mapToLong(Transaction::getTransactionValue)
+                                        .sum());
+                            }
+                    );
+                    return userReportResponseVOList;
+                });
+        return result;
     }
 
 

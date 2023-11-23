@@ -11,25 +11,14 @@ import java.util.List;
 @NoArgsConstructor
 public class JwtResponseVO {
 
-	private String token;
+    private String token;
 
-	private String refreshToken;
+    private Long id;
 
-	private Long id;
+    private String username;
 
-	private String username;
+    private String email;
 
-	private String fullName;
+    private List<String> roles;
 
-	private String email;
-
-	private String phone;
-
-	private Boolean isFirstLogin;
-
-	private Boolean isInternal;
-
-	private List<String> roles;
-
-	private List<String> permissions;
 }
