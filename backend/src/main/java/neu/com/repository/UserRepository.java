@@ -42,4 +42,6 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
     Optional<User> findByUserEmail(String userEmail);
 
     Optional<User> findByUserEmailAndUserIdNot(String userEmail, Long userId);
+
+    Optional<User> findByUserName(String username);
 }

@@ -2,10 +2,8 @@ package neu.com.controller.coursemanagement;
 
 import jakarta.validation.Valid;
 import neu.com.service.courseservice.document.DocumentService;
-import neu.com.service.courseservice.question.QuestionService;
 import neu.com.utils.Constants;
 import neu.com.vo.request.course.DocumentRequestVO;
-import neu.com.vo.request.course.QuestionRequestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
