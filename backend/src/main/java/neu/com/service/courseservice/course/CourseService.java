@@ -1,11 +1,12 @@
 package neu.com.service.courseservice.course;
 
+import neu.com.vo.request.SortingAndPagingRequestVO;
 import neu.com.vo.request.course.CourseCreateRequestVO;
 import neu.com.vo.request.course.CourseUpdateRequestVO;
 import neu.com.vo.request.course.FindCourseRequestVo;
-import neu.com.vo.request.SortingAndPagingRequestVO;
 import neu.com.vo.response.PagedResult;
 import neu.com.vo.response.course.CourseDetailResponseVO;
+import neu.com.vo.response.course.CourseReportResponseVO;
 import neu.com.vo.response.course.CourseResponseVO;
 
 public interface CourseService {
@@ -18,4 +19,7 @@ public interface CourseService {
     CourseResponseVO createCourse(CourseCreateRequestVO courseCreateRequestVORequestVO);
 
     CourseResponseVO deleteCourse(Long courseId);
+
+    PagedResult<CourseReportResponseVO> getPagingCourseReport(FindCourseRequestVo findCourseRequestVo, SortingAndPagingRequestVO paging);
+
 }

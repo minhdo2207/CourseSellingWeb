@@ -2,10 +2,7 @@ package neu.com.service.courseservice.course;
 
 import com.naharoo.commons.mapstruct.MappingFacade;
 import neu.com.configuration.exception.InvalidInputRequestException;
-import neu.com.model.Course;
-import neu.com.model.Enrollment;
-import neu.com.model.ZoomClass;
-import neu.com.model.ZoomEnrollment;
+import neu.com.model.*;
 import neu.com.repository.CourseRepository;
 import neu.com.utils.common.ResponseUtil;
 import neu.com.vo.enumData.CourseType;
@@ -109,6 +106,24 @@ public class CourseServiceImpl implements CourseService {
         return mapper.map(course, CourseResponseVO.class);
     }
 
+    @Override
+    public PagedResult<CourseReportResponseVO> getPagingCourseReport(FindCourseRequestVo findCourseRequestVo, SortingAndPagingRequestVO paging) {
+        PagedResult<CourseReportResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
+                pageable -> courseRepository.findCourses(findCourseRequestVo, pageable),
+                data -> {
+                    List<CourseReportResponseVO> courseReportResponseVOS = mapper.mapAsList(data, CourseReportResponseVO.class);
+                    courseReportResponseVOS.forEach(courseReportResponseVO -> {
+                        courseReportResponseVO.setTotalStudents(Long.valueOf(courseReportResponseVO.getEnrollments().size()));
+                        courseReportResponseVO.setTotalMoney(courseReportResponseVO.getTransactions().stream()
+                                .mapToLong(Transaction::getTransactionValue)
+                                .sum());
+                    });
+                    return courseReportResponseVOS;
+                });
+        return result;
+    }
+
+
     public List<ZoomClass> getZoomClassesFromCourse(Course course) {
         List<Enrollment> enrollments = course.getEnrollments();
 
@@ -121,7 +136,6 @@ public class CourseServiceImpl implements CourseService {
         List<ZoomClass> zoomClasses = zoomEnrollments.stream()
                 .map(ZoomEnrollment::getZoomClass)
                 .collect(Collectors.toList());
-
 
         return zoomClasses;
 

@@ -117,7 +117,7 @@ public class Constants {
     public static final int ORG_LEVELNO_MIN = 1;
 
     public static final int ORG_LEVELNO_MAX = 5;
-    public static final String DEFAULT_PASSWORD = "123456aA";
+    public static final String DEFAULT_PASSWORD = "123456";
     public static final String DEFAULT_BLANK_PASSWORD = " ";
 
     public static final String VALID_PASSWORD_PATTERN = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";

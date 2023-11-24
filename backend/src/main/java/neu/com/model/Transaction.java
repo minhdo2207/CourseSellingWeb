@@ -44,7 +44,7 @@ public class Transaction extends BaseEnt implements Serializable {
     private Date transactionDate;
 
     @Column(name = "transaction_value", nullable = false, precision = 10, scale = 2)
-    private BigDecimal transactionValue;
+    private Long transactionValue;
 
     @Column(name="status",nullable = false)
     private Long status;
