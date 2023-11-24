@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
             //Tutor
             TutorDetailResponseVO tutorDetailResponseVO = mapper.map(user, TutorDetailResponseVO.class);
             tutorDetailResponseVO.setClassVos(mapper.mapAsList(user.getTutor().getZoomClasses(), ClassResponseVO.class));
+            tutorDetailResponseVO.setTeachingStatus(user.getTutor().getZoomClasses().size() == 0 ? 0L : 1L);
             return tutorDetailResponseVO;
 
         } else {
@@ -86,6 +87,7 @@ public class UserServiceImpl implements UserService {
         user.setUserAddress(userUpdateRequestVO.getUserAddress());
         user.setUserEmail(userUpdateRequestVO.getUserEmail());
         user.setUserName(userUpdateRequestVO.getUserName());
+        user.setUserPhone(userUpdateRequestVO.getUserPhone());
         user.setUserPassword(encoder.encode(Constants.DEFAULT_PASSWORD));
         userRepository.save(user);
         return mapper.map(user, UserResponseVO.class);
@@ -149,6 +151,20 @@ public class UserServiceImpl implements UserService {
                     return userReportResponseVOList;
                 });
         return result;
+    }
+
+    @Override
+    public Object getFreeTeacher() {
+        List<User> tutors = userRepository.findAll();
+        List<User> freeTutors = new ArrayList<>();
+        for (User tutor : tutors) {
+            if (tutor.getTutor() != null) {
+                if (tutor.getTutor().getZoomClasses().size() == 0) {
+                    freeTutors.add(tutor);
+                }
+            }
+        }
+        return mapper.mapAsList(freeTutors, UserResponseVO.class);
     }
 
 

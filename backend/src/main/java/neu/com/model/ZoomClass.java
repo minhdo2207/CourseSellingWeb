@@ -52,4 +52,10 @@ public class ZoomClass extends BaseEnt implements Serializable {
     @OneToMany(mappedBy = "zoomClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<ZoomEnrollment> zoomEnrollments;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+
 }

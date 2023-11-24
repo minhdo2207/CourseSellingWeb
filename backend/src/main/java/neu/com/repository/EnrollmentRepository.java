@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
+import neu.com.model.Course;
 import neu.com.model.Enrollment;
 import neu.com.model.QEnrollment;
 import neu.com.vo.request.FindEnrollmentRequestVo;
@@ -17,6 +18,8 @@ import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.querydsl.binding.SingleValueBinding;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>, QuerydslPredicateExecutor<Enrollment>, QuerydslBinderCustomizer<QEnrollment> {
@@ -40,4 +43,6 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>, Q
     @Query(value = "SELECT count(*) FROM Enrollment e WHERE e.user.userId=?1")
     Long countEnrollment(Long userId);
 
+
+    Enrollment findByCourse(Optional<Course> courseOptional);
 }
