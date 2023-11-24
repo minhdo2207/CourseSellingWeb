@@ -62,4 +62,10 @@ public class UserController {
     public Object deleteUser(@PathVariable("userId") Long userId) {
         return userService.deleteUser(userId);
     }
+
+    @GetMapping("/free-teacher")
+    public Object getFreeTeacher() {
+        return userService.getFreeTeacher();
+
+    }
 }
