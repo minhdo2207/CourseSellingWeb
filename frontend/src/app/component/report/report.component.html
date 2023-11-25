@@ -28,16 +28,16 @@
       </div>
     </div>
 
-    <div class="tab">
-      <div class="tab-item" (click)="changeTypeCourse()">
+    <div class="tab" *ngIf="topicId == 2">
+      <div class="tab-item" (click)="changeTypeCourse('')">
         <div class="square" style="background-color: red;"></div>
         <p>Tất cả</p>
       </div>
-      <div class="tab-item" (click)="changeTypeCourse()">
+      <div class="tab-item" (click)="changeTypeCourse('1')">
         <div class="square" style="background-color: yellow;"></div>
         <p>Khóa học video</p>
       </div>
-      <div class="tab-item" (click)="changeTypeCourse()">
+      <div class="tab-item" (click)="changeTypeCourse('2')">
         <div class="square" style="background-color: green;"></div>
         <p>Khóa học zoom</p>
       </div>

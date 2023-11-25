@@ -55,7 +55,7 @@ export class ReportComponent {
   cntCourse = 0;
   cntRevenue = 0; 
 
-  typeCourse = 1;
+  typeCourse = '';
 
   ngOnInit() {
     this.getFullData();
@@ -73,7 +73,7 @@ export class ReportComponent {
   }
 
   getAllData(){
-    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch, startDate: this.from_date, endDate: this.to_date};
+    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch, startDate: this.from_date, endDate: this.to_date, type: this.typeCourse};
     switch(this.topicId){
       case 1:{
         option = Object.assign({size: 10}, option);
@@ -209,7 +209,8 @@ export class ReportComponent {
     this.excelService.exportToExcel(this.fullData, 'Báo cáo', 'Sheet1');
   }
 
-  changeTypeCourse(){
-    
+  changeTypeCourse(type: any){
+    this.typeCourse = type;
+    this.getAllData();
   }
 }
