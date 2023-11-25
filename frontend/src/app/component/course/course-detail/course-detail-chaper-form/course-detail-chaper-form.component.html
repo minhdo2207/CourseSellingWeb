@@ -1,0 +1,24 @@
+<!-- student-modal.component.html -->
+<div class="overlay" *ngIf="isOpen">
+    <div class="modal">
+        <div>
+            <div class="title-form">Thêm chương</div>
+            <form (ngSubmit)="onSubmit()" class="my-form">
+                <div class="out-line-ip">
+                    <label for="courseName" class="label-ip">Số thứ tự</label>
+                    <input class="ip" type="text" id="courseName" name="courseName" [(ngModel)]="chapterNo" required>
+                </div>
+
+                <div class="out-line-ip">
+                    <label for="coursePrice">Tên chương</label>
+                    <input type="text" id="coursePrice" name="coursePrice" [(ngModel)]="chapterTitle" required>
+                </div>
+
+                <div class="action-btn">
+                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <button type="submit" class="btn btn-add">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

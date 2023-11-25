@@ -1,0 +1,41 @@
+<!-- student-modal.component.html -->
+<div class="overlay" *ngIf="isOpen">
+    <div class="modal">
+        <div>
+            <div class="title-form">{{data.title}}</div>
+            <form (ngSubmit)="onSubmit()" class="my-form">
+                <div class="out-line-ip">
+                    <label for="courseName" class="label-ip">Họ và Tên</label>
+                    <input class="ip" type="text" id="courseName" name="userName" [(ngModel)]="name" required>
+                </div>
+
+                <div class="out-line-ip">
+                    <label for="coursePrice">Địa chỉ</label>
+                    <input type="text" id="coursePrice" name="userAddress" [(ngModel)]="address" required>
+                </div>
+
+                <div class="out-line-ip">
+                    <label for="coursePrice">Số điện thoại</label>
+                    <input type="text" id="coursePrice" name="userPhone" [(ngModel)]="phone" required>
+                </div>
+
+                <div class="out-line-ip">
+                    <label for="coursePrice">Email</label>
+                    <input type="text" id="coursePrice" name="userEmail" [(ngModel)]="email" required>
+                </div>
+
+                <!-- <div class="out-line-ip" *ngIf="data.type === 'CREATE'">
+                    <label for="courseCategory">Tên khoá học</label>
+                    <select id="courseCategory" name="courseCategory" [(ngModel)]="courseCategory" required>
+                        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                    </select>
+                </div> -->
+                
+                <div class="action-btn">
+                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <button type="submit" class="btn btn-add">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

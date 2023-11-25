@@ -1,0 +1,157 @@
+<div class="container">
+    <div class="title">Báo cáo</div>
+
+    <div style="height: 100px;"></div>
+
+    <div class="out-line-title">
+      <div class="title">{{ topic[topicId - 1].title }}</div>
+      <div class="action-btn">
+        <select (change)="changeTopicId($event)" name="province" id="option" style="margin-right: 20px;">
+          <option value="1">Danh sách học viên</option>
+          <option value="2">Danh sách khóa học</option>
+          <option value="3">Danh sách đăng kí khóa học</option>
+        </select>
+        <!-- <button class="btn-filter" (click)="onSearch()">Lọc kết quả</button> -->
+      </div>
+    </div>
+
+    <table class="table-custom" *ngIf="topicId == 1">
+        <thead>
+          <tr class="row">
+            <th class="text-left" style="width: 180px;">Họ và Tên</th>
+            <th class="text-left" style="width: 250px;">Email</th>
+            <th class="text-left" style="width: 200px;">Số điện thoại</th>
+            <th class="text-center" style="width: 100px;">Số khoá học đã đăng ký</th>
+            <th class="text-center" style="width: 100px;">Học phí đã thu</th>
+          </tr>
+        </thead> 
+        <tbody >
+          <tr *ngFor="let student of students" class="row">
+            <td class="text-left" style="width: 180px;">{{ student.userName }}</td>
+            <td class="text-left"  style="width: 250px;"> {{ student.userEmail }}</td>
+            <td class="text-left"  style="width: 200px;"> {{ student.userPhone }}</td>
+            <td class="text-center"  style="width: 100px;"> {{ student.totalCourse }}</td>
+            <td class="text-center"  style="width: 100px;"> {{ student.totalPay }}</td>
+          </tr>
+        </tbody>
+        <tfoot style="display: flex; justify-content: space-between;">
+          <button (click)="exportFile()">Xuất file báo cáo</button>
+          <div style="display: flex; justify-content: space-between;">
+            <p style="margin-left: 20px;">Tổng số {{paging.totalRecord}} bản ghi</p>
+            <div
+              style="display: flex; align-items: center;"
+            >
+              <button (click)="previousPage()"><</button>
+              <div>Hiển thị trang thứ {{paging.page}} / {{paging.totalPage}} trang</div>
+              <button (click)="nextPage()">></button>
+            </div>
+          </div>
+      </tfoot>
+      </table>
+
+      <table class="table-custom" *ngIf="topicId == 2">
+        <thead>
+          <tr class="row">
+            <th class="text-left" style="width: 180px;">Khóa học</th>
+            <th class="text-left" style="width: 250px;">Loại</th>
+            <th class="text-left" style="width: 200px;">Lớp</th>
+            <th class="text-center" style="width: 100px;">Số học sinh</th>
+            <th class="text-center" style="width: 100px;">Học phí đã thu</th>
+          </tr>
+        </thead> 
+        <tbody >
+          <tr *ngFor="let item of courses" class="row">
+            <td class="text-left" style="width: 180px;">{{ item.courseTitle }}</td>
+            <td class="text-left"  style="width: 250px;"> {{ item.courseType == 1 ? 'Khóa video' : 'Khóa meeting' }}</td>
+            <td class="text-left"  style="width: 200px;"> {{ item.courseGrade }}</td>
+            <td class="text-center"  style="width: 100px;"> {{ item.totalStudents }}</td>
+            <td class="text-center"  style="width: 100px;"> {{ item.totalMoney }} VND</td>
+          </tr>
+        </tbody>
+        <tfoot style="display: flex; justify-content: space-between;">
+          <button (click)="exportFile()">Xuất file báo cáo</button>
+          <div style="display: flex; justify-content: space-between;">
+            <p style="margin-left: 20px;">Tổng số {{paging.totalRecord}} bản ghi</p>
+            <div
+              style="display: flex; align-items: center;"
+            >
+              <button (click)="previousPage()"><</button>
+              <div>Hiển thị trang thứ {{paging.page}} / {{paging.totalPage}} trang</div>
+              <button (click)="nextPage()">></button>
+            </div>
+          </div>
+      </tfoot>
+      </table>
+
+      <table class="table-custom" *ngIf="topicId == 3">
+        <thead>
+          <tr class="row">
+            <th class="text-left" style="width: 180px;">Họ và Tên</th>
+            <th class="text-left" style="width: 250px;">Khóa học</th>
+            <th class="text-left" style="width: 200px;">Ngày đăng ký</th>
+            <th class="text-center" style="width: 100px;">Trạng thái</th>
+          </tr>
+        </thead> 
+        <tbody >
+          <tr *ngFor="let item of enrollments" class="row">
+            <td class="text-left" style="width: 180px;">{{ item.userName }}</td>
+            <td class="text-left"  style="width: 250px;"> {{ item.courseName }}</td>
+            <td class="text-left"  style="width: 200px;"> {{ item.showTime }}</td>
+            <td class="text-center"  style="width: 100px;"> {{ item.showStatus }}</td>
+          </tr>
+        </tbody>
+        <tfoot style="display: flex; justify-content: space-between;">
+          <button (click)="exportFile()">Xuất file báo cáo</button>
+          <div style="display: flex; justify-content: space-between;">
+            <p style="margin-left: 20px;">Tổng số {{paging.totalRecord}} bản ghi</p>
+            <div
+              style="display: flex; align-items: center;"
+            >
+              <button (click)="previousPage()"><</button>
+              <div>Hiển thị trang thứ {{paging.page}} / {{paging.totalPage}} trang</div>
+              <button (click)="nextPage()">></button>
+            </div>
+          </div>
+      </tfoot>
+      </table>
+
+      <div class="statistical" *ngIf="topicId == 1 || topicId == 2">
+        <div class="statistical-content" style="display: flex; justify-content: space-evenly;">
+             <div class="item-statistical">
+                <div class="icon">
+                    <img src="../../../assets/image/icon1.svg">
+                </div>
+                <div class="text">
+                    <div class="text1">Học viên</div>
+                    <div class="text2">{{cntStudent}}</div>
+                </div>
+             </div>
+             <div class="item-statistical">
+                <div class="icon">
+                    <img src="../../../assets/image/icon2.svg">
+                </div>
+                <div class="text">
+                    <div class="text1">Khóa học đăng ký</div>
+                    <div class="text2">{{cntCourse}}</div>
+                </div>
+             </div>
+             <div class="item-statistical">
+                <div class="icon">
+                    <img src="../../../assets/image/icon3.svg">
+                </div>
+                <div class="text">
+                    <div class="text1">Doanh thu</div>
+                    <div class="text2">{{cntRevenue}} VND</div>
+                </div>
+             </div>
+        </div>
+      </div>
+
+      <div *ngIf="topicId == 3">
+        <app-pie></app-pie>
+      </div>
+
+</div>
+
+
+<app-student-form [data]="modalData" [isOpen]="isModalOpen" (closeModal)="onCloseModal()"></app-student-form>
