@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="title">Chi tiết giáo viên</div>
+
+    <div class="info">
+        <div class="info-left">
+            <div class="out-line-avatar">
+                <img src="../../../../assets/image/avatar-demo.svg" class="avatar">
+            </div>
+            <div class="name">{{userData.userName}}</div>
+        </div>
+        <div class="info-right">
+            <div class="items">
+                <div class="item">
+                    <img src="../../../../assets/image/icon-mail-smail.svg">
+                    <div class="item-text">Email: {{userData.userEmail}}</div>
+                </div>
+                <div class="item">
+                    <img src="../../../../assets/image/icon-phone-small.svg">
+                    <div class="item-text">Số điện thoại: {{userData.userPhone}}</div>
+                </div>
+                <div class="item">
+                    <img src="../../../../assets/image/icon-location-small.svg">
+                    <div class="item-text">Địa chỉ: {{userData.userAddress}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="out-line-title">
+        <div class="title">Thông tin chi tiết</div>
+    </div>
+
+    <div class="content-detail">
+        <div class="header-detail"></div>
+
+        <div class="container-detail">
+            <div class="title-content">Giới Thiệu</div>
+
+            <ul class="content-item">
+                <li>Ngày sinh: {{userData.showTime}}</li>
+                <li>Giới tính: {{userData.userGender == 1 ? 'Nam' : 'Nữ'}}</li>
+            </ul>
+
+            <div class="title-content">Trạng thái</div>
+
+            <ul class="content-item">
+                <li>{{userData.teachingStatus == 1 ? 'Đã Được Phân Lớp' : 'Chưa Được Phân Lớp'}}</li>
+            </ul>
+        </div>
+
+        <!-- <div class="outline-btn-detail">
+
+            <button class="btn btn-detail">Thay đổi thông tin</button>
+        </div> -->
+
+        <div class="footer-detail"></div>
+    </div>
+
+</div>

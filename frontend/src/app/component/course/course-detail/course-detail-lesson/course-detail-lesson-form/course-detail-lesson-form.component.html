@@ -1,0 +1,27 @@
+<!-- student-modal.component.html -->
+<div class="overlay" *ngIf="isOpen">
+    <div class="modal">
+        <div>
+            <div class="title-form">{{data.title}}</div>
+            <form class="my-form">
+                <div class="out-line-ip">
+                    <label for="courseName" class="label-ip">Link video:</label>
+                    <input placeholder="Nhập link video" class="ip" type="text" id="courseName" name="courseName"
+                        [(ngModel)]="courseName" required>
+                </div>
+
+                <div class="out-line-ip">
+                    <label for="coursePrice">Tiêu đề bài học:</label>
+                    <div class="custom-textarea">
+                        <textarea [(ngModel)]="coursePrice" name="coursePrice" placeholder="Nhập mô tả bài học"></textarea>
+                    </div>
+                </div>
+
+                <div class="action-btn">
+                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <button type="submit" (click)="onSubmit()" class="btn btn-add">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

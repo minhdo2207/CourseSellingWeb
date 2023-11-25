@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="title">{{lessonData.lessonTitle}}<span class="tab">{{typeId == 1 ? 'Khóa lẻ' : 'Khóa meeting'}}</span></div>
+
+    <div class="out-line-content">
+        <div class="out-line-title">
+            <div class="title-content">Danh sách câu hỏi trắc nghiệm </div>
+            <div class="action-btn">
+                <button class="btn btn-add-chapter" (click)="openModal()">Thêm bài học</button>
+            </div>
+        </div>
+
+        <table class="table-custom">
+            <thead>
+                <tr class="row">
+                  <th class="text-left" style="width: 100px;">Câu hỏi</th>
+                  <th class="text-left" style="width: 100px;">Đáp án A</th>
+                  <th class="text-left" style="width: 100px;">Đáp án B</th>
+                  <th class="text-left" style="width: 100px;">Đáp án C</th>
+                  <th class="text-left" style="width: 100px;">Đáp án D</th>
+                  <th class="text-left" style="width: 100px;">Câu trả lời</th>
+                  <th class="text-center" style="width: 120px;">Hành động</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let item of questions" class="row">
+                  <td class="text-left" style="width: 100px;">{{ item.question }}</td>
+                  <td class="text-left" style="width: 100px;">{{ item.choiceA }}</td>
+                  <td class="text-left" style="width: 100px;">{{ item.choiceB }}</td>
+                  <td class="text-left" style="width: 100px;">{{ item.choiceC }}</td>
+                  <td class="text-left" style="width: 100px;">{{ item.choiceD }}</td>
+                  <td class="text-left" style="width: 100px;">{{ item.solution }}</td>
+                  <td class="text-center" style="width: 120px; justify-content: center">
+                      <button class="btn-edit" (click)="openModal(item)">Chỉnh sửa</button>
+                      <button class="btn-delete" (click)="deleteRecord1(item.questionId)">Xóa</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                  <div style="height: 60px;"></div>
+              </tfoot>
+        </table>
+    </div>
+
+    <div class="out-line-content">
+      <div class="out-line-title">
+          <div class="title-content">Danh sách tài liệu </div>
+          <div class="action-btn">
+              <button class="btn btn-add-chapter" (click)="openModalDocument2()">Thêm bài học</button>
+          </div>
+      </div>
+
+      <table class="table-custom">
+          <thead>
+              <tr class="row">
+                <th class="text-left" style="width: 200px;">Tên tài liệu</th>
+                <th class="text-left" style="width: 300px;">file tài liệu</th>
+                <th class="text-center" style="width:300px;">Hành động</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let item of documents" class="row">
+                <td class="text-left" style="width: 200px;">{{ item.documentTitle }}</td>
+                <td class="text-left" style="width: 300px;">{{ item.documentLink }}</td>
+                <td class="text-center" style="width: 300px; justify-content: center">
+                    <button class="btn-edit" (click)="openModalDocument2(item)">Chỉnh sửa</button>
+                    <button class="btn-delete" (click)="deleteRecord2(item.documentId)">Xóa</button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <div style="height: 60px;"></div>
+            </tfoot>
+      </table>
+  </div>
+</div>
+
+<app-course-detail-lesson-detail-form [data]="modalData" [isOpen]="isModalOpen" (closeModal)="onCloseModal()"></app-course-detail-lesson-detail-form>
+
+<app-course-detail-lesson-detail-form-document [data]="modalData2" [isOpen]="isModalOpen2" (closeModal)="onCloseModal2()"></app-course-detail-lesson-detail-form-document>
+

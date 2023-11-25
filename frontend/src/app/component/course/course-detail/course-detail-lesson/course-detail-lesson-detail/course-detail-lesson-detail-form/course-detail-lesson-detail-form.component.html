@@ -1,0 +1,47 @@
+<!-- student-modal.component.html -->
+<div class="overlay" *ngIf="isOpen">
+    <div class="modal">
+        <div>
+            <div class="title-form">{{data.title}}</div>
+            <form (ngSubmit)="onSubmit()" class="my-form">
+                <div class="out-line-body-form">
+                    <div class="out-line-ip">
+                        <label for="courseName" class="label-ip">Câu hỏi</label>
+                        <input class="ip" type="text" id="courseName" name="question" [(ngModel)]="question" required>
+                    </div>
+
+                    <div class="out-line-ip">
+                        <label for="courseName" class="label-ip">Đáp án 1</label>
+                        <input class="ip" type="text" id="courseName" name="answer1" [(ngModel)]="answer1" required>
+                    </div>
+
+                    <div class="out-line-ip">
+                        <label for="courseName" class="label-ip">Đáp án 2</label>
+                        <input class="ip" type="text" id="courseName" name="answer2" [(ngModel)]="answer2" required>
+                    </div>
+
+                    <div class="out-line-ip">
+                        <label for="courseName" class="label-ip">Đáp án 3</label>
+                        <input class="ip" type="text" id="courseName" name="answer3" [(ngModel)]="answer3" required>
+                    </div>
+
+                    <div class="out-line-ip">
+                        <label for="courseName" class="label-ip">Đáp án 4</label>
+                        <input class="ip" type="text" id="courseName" name="answer4" [(ngModel)]="answer4" required>
+                    </div>
+
+                    <div class="out-line-ip">
+                        <label for="courseName" class="label-ip">Câu trả lời</label>
+                        <input class="ip" type="text" id="courseName" name="correctAnswer" [(ngModel)]="correctAnswer"
+                            required>
+                    </div>
+
+                </div>
+                <div class="action-btn">
+                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <button type="submit" class="btn btn-add">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
