@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
         user.setUserAddress(userUpdateRequestVO.getUserAddress());
         user.setUserEmail(userUpdateRequestVO.getUserEmail());
         user.setUserName(userUpdateRequestVO.getUserName());
+//        user.setUserPassword(encoder.encode(Constants.DEFAULT_PASSWORD));
         user.setUserPhone(userUpdateRequestVO.getUserPhone());
         user.setUserPassword(encoder.encode(Constants.DEFAULT_PASSWORD));
         userRepository.save(user);

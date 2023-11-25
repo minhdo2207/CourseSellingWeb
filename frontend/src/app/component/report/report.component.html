@@ -6,12 +6,40 @@
     <div class="out-line-title">
       <div class="title">{{ topic[topicId - 1].title }}</div>
       <div class="action-btn">
+        <div class="data-time" *ngIf="topicId != 1">
+          <div style="margin-right: 5px;">
+            <label for="">Từ ngày</label>
+            <br>
+            <input type="date" [(ngModel)]="from_date">
+          </div>
+          <div style="margin-right: 15px;">
+            <label for="">Đến ngày</label>
+            <br>
+            <input type="date" [(ngModel)]="to_date">
+          </div>
+        </div>
+
         <select (change)="changeTopicId($event)" name="province" id="option" style="margin-right: 20px;">
           <option value="1">Danh sách học viên</option>
           <option value="2">Danh sách khóa học</option>
           <option value="3">Danh sách đăng kí khóa học</option>
         </select>
-        <!-- <button class="btn-filter" (click)="onSearch()">Lọc kết quả</button> -->
+        <button *ngIf="topicId != 1" class="btn-filter" (click)="onSearch()">Lọc kết quả</button>
+      </div>
+    </div>
+
+    <div class="tab">
+      <div class="tab-item" (click)="changeTypeCourse()">
+        <div class="square" style="background-color: red;"></div>
+        <p>Tất cả</p>
+      </div>
+      <div class="tab-item" (click)="changeTypeCourse()">
+        <div class="square" style="background-color: yellow;"></div>
+        <p>Khóa học video</p>
+      </div>
+      <div class="tab-item" (click)="changeTypeCourse()">
+        <div class="square" style="background-color: green;"></div>
+        <p>Khóa học zoom</p>
       </div>
     </div>
 

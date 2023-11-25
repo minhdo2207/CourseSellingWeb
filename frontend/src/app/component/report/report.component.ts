@@ -25,14 +25,19 @@ export class ReportComponent {
 
   option = 'option1';
 
+  from_date: any;
+  to_date: any;
+
   topic = [
     {id: 1, title: 'Báo cáo học viên'},
-    {id: 2, title: 'Báo cáo khóa học'},
+    {id: 2, title: 'Báo cáo doanh thu'},
     {id: 3, title: 'Báo cáo đăng ký khóa học'}
   ]
   topicId = 1;
 
   changeTopicId(e: any){
+    this.from_date = ''
+    this.to_date = '';
     this.topicId = Number(e.target.value);
     this.getAllData();
     this.getFullData();
@@ -50,6 +55,8 @@ export class ReportComponent {
   cntCourse = 0;
   cntRevenue = 0; 
 
+  typeCourse = 1;
+
   ngOnInit() {
     this.getFullData();
     this.getAllData();
@@ -66,7 +73,7 @@ export class ReportComponent {
   }
 
   getAllData(){
-    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch};
+    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch, startDate: this.from_date, endDate: this.to_date};
     switch(this.topicId){
       case 1:{
         option = Object.assign({size: 10}, option);
@@ -129,7 +136,7 @@ export class ReportComponent {
         await this.reportSrv.class(option, (res: any) => {
           if(res){
             this.fullData = res.elements;
-            this.paging = res.paging;
+            // this.paging = res.paging;
             this.fullData.forEach(item => {
               if(item.status == 1) item.showStatus = 'Đã Tham Gia';
               if(item.status == 2) item.showStatus = 'Đã Hủy';
@@ -166,6 +173,8 @@ export class ReportComponent {
   }
 
   onSearch(){
+    if(!this.from_date) this.from_date = '';
+    if(!this.to_date) this.to_date = '';
     this.keySearch = this.name;
     this.getAllData();
   }
@@ -200,4 +209,7 @@ export class ReportComponent {
     this.excelService.exportToExcel(this.fullData, 'Báo cáo', 'Sheet1');
   }
 
+  changeTypeCourse(){
+    
+  }
 }

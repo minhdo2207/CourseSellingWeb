@@ -31,6 +31,7 @@ import { TeacherDetailFormComponent } from './component/teacher/teacher-detail/t
 import { PieComponent } from './component/report/pie/pie.component';
 import { CourseDetailLessonDetailFormDocumentComponent } from './component/course/course-detail/course-detail-lesson/course-detail-lesson-detail/course-detail-lesson-detail-form-document/course-detail-lesson-detail-form-document.component';
 import { ModalComponent } from './share-ui/modal/modal.component';
+import { LessonFormComponent } from './component/course/course-detail/lesson-form/lesson-form.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ModalComponent } from './share-ui/modal/modal.component';
     TeacherDetailFormComponent,
     PieComponent,
     CourseDetailLessonDetailFormDocumentComponent,
-    ModalComponent
+    ModalComponent,
+    LessonFormComponent
   ],
   imports: [
     BrowserModule,

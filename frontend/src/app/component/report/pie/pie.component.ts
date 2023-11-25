@@ -29,6 +29,7 @@ export class PieComponent {
   public chartOptions: Partial<ChartOptions> | any;
 
   dataChart:number[] = [];
+  totalStudent = 0;
 
   constructor(
     private reportSrv: ReportService
@@ -48,6 +49,7 @@ export class PieComponent {
             if(item.status == 0) c++;
           });
           this.dataChart.push(a,b,c);
+          this.totalStudent = res.elements.length;
         }
       }
     )

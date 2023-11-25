@@ -1,7 +1,7 @@
 <!-- student-modal.component.html -->
 <div class="overlay" *ngIf="isOpen">
     <div class="modal">
-        <div>
+        <div *ngIf="type == 1">
             <div class="title-form">Thêm chương</div>
             <form (ngSubmit)="onSubmit()" class="my-form">
                 <div class="out-line-ip">
@@ -12,6 +12,33 @@
                 <div class="out-line-ip">
                     <label for="coursePrice">Tên chương</label>
                     <input type="text" id="coursePrice" name="coursePrice" [(ngModel)]="chapterTitle" required>
+                </div>
+
+                <div class="action-btn">
+                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <button type="submit" class="btn btn-add">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+
+        <div *ngIf="type == 2">
+            <div class="title-form" (click)="test()">Thêm mới lớp học</div>
+            <form (ngSubmit)="onSubmit()" class="my-form">
+                <div class="out-line-ip">
+                    <label for="courseName" class="label-ip">Tên lớp học</label>
+                    <input class="ip" type="text" id="courseName" name="courseName" [(ngModel)]="chapterNo" required>
+                </div>
+
+                <div class="out-line-ip">
+                    <label for="coursePrice">Link lớp học</label>
+                    <input type="text" id="coursePrice" name="coursePrice" [(ngModel)]="chapterTitle" required>
+                </div>
+
+                <div class="out-line-ip">
+                    <label for="coursePrice">Giáo viên</label>
+                    <select name="source" [(ngModel)]="tutorId" id="source" style="margin-right: 20px;">
+                        <option *ngFor="let item of teachers" value="{{item.userId}}">{{item.userName}}</option>
+                      </select>
                 </div>
 
                 <div class="action-btn">
