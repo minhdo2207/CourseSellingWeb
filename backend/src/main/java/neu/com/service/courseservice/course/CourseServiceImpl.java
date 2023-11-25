@@ -50,7 +50,7 @@ public class CourseServiceImpl implements CourseService {
             return videoCourseDetailResponseVO;
         } else if (CourseType.MEETING_COURSE.getValue().equals(course.getCourseType())) {
             MeetingCourseDetailResponseVO meetingCourseDetailResponseVO = mapper.map(course, MeetingCourseDetailResponseVO.class);
-            List<ClassResponseVO> classResponseVOS = mapper.mapAsList(getZoomClassesFromCourse(course), ClassResponseVO.class);
+            List<ClassResponseVO> classResponseVOS = mapper.mapAsList(course.getClasses(), ClassResponseVO.class);
 
             for (ClassResponseVO classResponseVO : classResponseVOS) {
                 classResponseVO.setTutorName(classResponseVO.getTutor().getUser().getUserName());

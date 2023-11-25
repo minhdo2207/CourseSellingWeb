@@ -20,4 +20,6 @@ public interface UserService {
     UserResponseVO deleteUser(Long userId);
 
     Object getPagingUserReport(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging);
+
+    Object getFreeTeacher();
 }

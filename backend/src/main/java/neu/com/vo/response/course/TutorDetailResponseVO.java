@@ -9,4 +9,5 @@ import java.util.List;
 @SuperBuilder
 public class TutorDetailResponseVO extends UserDetailResponseVO {
     private List<ClassResponseVO> classVos;
+    private Long teachingStatus;
 }
