@@ -1,6 +1,7 @@
 package neu.com.service.user;
 
 import neu.com.vo.request.SortingAndPagingRequestVO;
+import neu.com.vo.request.course.FindTeacherRequestVo;
 import neu.com.vo.request.course.FindUserRequestVo;
 import neu.com.vo.request.course.UserCreateRequestVO;
 import neu.com.vo.request.course.UserUpdateRequestVO;
@@ -9,7 +10,7 @@ import neu.com.vo.response.course.UserDetailResponseVO;
 import neu.com.vo.response.course.UserResponseVO;
 
 public interface UserService {
-    PagedResult<UserResponseVO> getPagingCourse(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging);
+    PagedResult<UserResponseVO> getPagingUsers(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging);
 
     UserDetailResponseVO getUserDetail(Long userId);
 
@@ -22,4 +23,6 @@ public interface UserService {
     Object getPagingUserReport(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging);
 
     Object getFreeTeacher();
+
+    Object getPagingTeachers(FindTeacherRequestVo findTeacherRequestVo, SortingAndPagingRequestVO paging);
 }

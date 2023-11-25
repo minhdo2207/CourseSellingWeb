@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FindCourseRequestVo {
 	private String name;
-
 	private Long type;
+	private String startDate;
+	private String endDate;
 }
 	

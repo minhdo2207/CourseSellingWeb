@@ -16,6 +16,7 @@ import neu.com.vo.response.course.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +32,13 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public PagedResult<CourseResponseVO> getPagingCourse(FindCourseRequestVo findCourseRequestVo, SortingAndPagingRequestVO paging) {
         PagedResult<CourseResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
-                pageable -> courseRepository.findCourses(findCourseRequestVo, pageable),
+                pageable -> {
+                    try {
+                        return courseRepository.findCourses(findCourseRequestVo, pageable);
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
                 data -> mapper.mapAsList(data, CourseResponseVO.class));
         return result;
     }
@@ -109,7 +116,13 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public PagedResult<CourseReportResponseVO> getPagingCourseReport(FindCourseRequestVo findCourseRequestVo, SortingAndPagingRequestVO paging) {
         PagedResult<CourseReportResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
-                pageable -> courseRepository.findCourses(findCourseRequestVo, pageable),
+                pageable -> {
+                    try {
+                        return courseRepository.findCourses(findCourseRequestVo, pageable);
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
                 data -> {
                     List<CourseReportResponseVO> courseReportResponseVOS = mapper.mapAsList(data, CourseReportResponseVO.class);
                     courseReportResponseVOS.forEach(courseReportResponseVO -> {
