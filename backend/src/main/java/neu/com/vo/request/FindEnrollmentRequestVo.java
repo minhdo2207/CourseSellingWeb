@@ -6,4 +6,6 @@ import lombok.Data;
 public class FindEnrollmentRequestVo {
     private String userName;
     private String courseName;
+    private String startDate;
+    private String endDate;
 }

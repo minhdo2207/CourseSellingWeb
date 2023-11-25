@@ -7,11 +7,15 @@ import neu.com.model.User;
 import neu.com.model.ZoomClass;
 import neu.com.repository.*;
 import neu.com.vo.request.course.ClassRequestVO;
+import neu.com.vo.response.ClassDetailResponseVO;
 import neu.com.vo.response.course.ClassResponseVO;
+import neu.com.vo.response.course.UserResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -114,6 +118,15 @@ public class ClassServiceImpl implements ClassService {
             throw new InvalidInputRequestException("msg_error_class_notfound");
         }
         ZoomClass zoomClass = classOptional.get();
-        return mapper.map(zoomClass, ClassResponseVO.class);
+        ClassDetailResponseVO classDetailResponseVO = mapper.map(zoomClass, ClassDetailResponseVO.class);
+        classDetailResponseVO.setTutorName(zoomClass.getTutor().getUser().getUserName());
+        // Map ZoomEnrollment to UserResponseVO for students
+        List<UserResponseVO> students = classDetailResponseVO.getZoomEnrollments().stream()
+                .map(enrollment -> mapper.map(enrollment.getEnrollment().getUser(), UserResponseVO.class))
+                .collect(Collectors.toList());
+
+        classDetailResponseVO.setStudents(students);
+
+        return classDetailResponseVO;
     }
 }
