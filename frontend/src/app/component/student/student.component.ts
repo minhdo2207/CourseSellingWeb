@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/service/alert.service';
+import { ModalService } from 'src/app/service/modal.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class StudentComponent {
   constructor(
     private alertSrv: AlertService,
     private userSrv: UserService,
-    private router: Router
+    private router: Router,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit() {
@@ -102,5 +104,9 @@ export class StudentComponent {
         }
       },
     )
+  }
+
+  showContact(info: string) {
+    this.modalService.updateStatusModal(true, info);
   }
 }

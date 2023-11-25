@@ -21,7 +21,7 @@
             <th class="text-left" style="width: 180px;">Họ và Tên</th>
             <th class="text-left" style="width: 250px;">Email</th>
             <th class="text-left" style="width: 200px;">Số điện thoại</th>
-            <th class="text-center" style="width: 100px;">Số khoá học đã đăng ký</th>
+            <th class="text-center" style="width: 200px;">Số khoá học đã đăng ký</th>
             <th class="text-center" style="width: 100px;">Học phí đã thu</th>
           </tr>
         </thead> 
@@ -30,7 +30,7 @@
             <td class="text-left" style="width: 180px;">{{ student.userName }}</td>
             <td class="text-left"  style="width: 250px;"> {{ student.userEmail }}</td>
             <td class="text-left"  style="width: 200px;"> {{ student.userPhone }}</td>
-            <td class="text-center"  style="width: 100px;"> {{ student.totalCourse }}</td>
+            <td class="text-center"  style="width: 200px;"> {{ student.totalCourse }}</td>
             <td class="text-center"  style="width: 100px;"> {{ student.totalPay }}</td>
           </tr>
         </tbody>
@@ -55,8 +55,8 @@
             <th class="text-left" style="width: 180px;">Khóa học</th>
             <th class="text-left" style="width: 250px;">Loại</th>
             <th class="text-left" style="width: 200px;">Lớp</th>
-            <th class="text-center" style="width: 100px;">Số học sinh</th>
-            <th class="text-center" style="width: 100px;">Học phí đã thu</th>
+            <th class="text-center" style="width: 150px;">Số học sinh</th>
+            <th class="text-center" style="width: 200px;">Học phí đã thu</th>
           </tr>
         </thead> 
         <tbody >
@@ -64,8 +64,8 @@
             <td class="text-left" style="width: 180px;">{{ item.courseTitle }}</td>
             <td class="text-left"  style="width: 250px;"> {{ item.courseType == 1 ? 'Khóa video' : 'Khóa meeting' }}</td>
             <td class="text-left"  style="width: 200px;"> {{ item.courseGrade }}</td>
-            <td class="text-center"  style="width: 100px;"> {{ item.totalStudents }}</td>
-            <td class="text-center"  style="width: 100px;"> {{ item.totalMoney }} VND</td>
+            <td class="text-center"  style="width: 150px;"> {{ item.totalStudents }}</td>
+            <td class="text-center"  style="width: 200px;"> {{ item.totalMoney }} VND</td>
           </tr>
         </tbody>
         <tfoot style="display: flex; justify-content: space-between;">
@@ -89,7 +89,7 @@
             <th class="text-left" style="width: 180px;">Họ và Tên</th>
             <th class="text-left" style="width: 250px;">Khóa học</th>
             <th class="text-left" style="width: 200px;">Ngày đăng ký</th>
-            <th class="text-center" style="width: 100px;">Trạng thái</th>
+            <th class="text-center" style="width: 200px;">Trạng thái</th>
           </tr>
         </thead> 
         <tbody >
@@ -97,7 +97,7 @@
             <td class="text-left" style="width: 180px;">{{ item.userName }}</td>
             <td class="text-left"  style="width: 250px;"> {{ item.courseName }}</td>
             <td class="text-left"  style="width: 200px;"> {{ item.showTime }}</td>
-            <td class="text-center"  style="width: 100px;"> {{ item.showStatus }}</td>
+            <td class="text-center"  style="width: 200px;"> {{ item.showStatus }}</td>
           </tr>
         </tbody>
         <tfoot style="display: flex; justify-content: space-between;">
