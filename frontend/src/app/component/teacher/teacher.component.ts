@@ -103,4 +103,8 @@ export class TeacherComponent {
       },
     )
   }
+
+  changeStatusTeacher(e: any){
+
+  }
 }

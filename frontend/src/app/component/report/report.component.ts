@@ -25,9 +25,12 @@ export class ReportComponent {
 
   option = 'option1';
 
+  from_date: any;
+  to_date: any;
+
   topic = [
     {id: 1, title: 'Báo cáo học viên'},
-    {id: 2, title: 'Báo cáo khóa học'},
+    {id: 2, title: 'Báo cáo doanh thu'},
     {id: 3, title: 'Báo cáo đăng ký khóa học'}
   ]
   topicId = 1;
@@ -49,6 +52,8 @@ export class ReportComponent {
   cntStudent = 0;
   cntCourse = 0;
   cntRevenue = 0; 
+
+  typeCourse = 1;
 
   ngOnInit() {
     this.getFullData();
@@ -129,7 +134,7 @@ export class ReportComponent {
         await this.reportSrv.class(option, (res: any) => {
           if(res){
             this.fullData = res.elements;
-            this.paging = res.paging;
+            // this.paging = res.paging;
             this.fullData.forEach(item => {
               if(item.status == 1) item.showStatus = 'Đã Tham Gia';
               if(item.status == 2) item.showStatus = 'Đã Hủy';
@@ -166,6 +171,7 @@ export class ReportComponent {
   }
 
   onSearch(){
+    // console.log(this.from_date, this.to_date);
     this.keySearch = this.name;
     this.getAllData();
   }
@@ -200,4 +206,7 @@ export class ReportComponent {
     this.excelService.exportToExcel(this.fullData, 'Báo cáo', 'Sheet1');
   }
 
+  changeTypeCourse(){
+    
+  }
 }
