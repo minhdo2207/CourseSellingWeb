@@ -40,6 +40,25 @@ export class UserService {
     )
   }
 
+  getAllTeacher(option: any, callBack: Function): any {
+    let param = {};
+    param = Object.assign({size: 10}, option);
+
+    this.http.get(baseUrl + 'admin/user/teacher', { observe: 'response', params: param, headers: this.headers }).subscribe(
+      (response) => {
+        if (response.body) {
+          callBack(response.body);
+        }
+      },
+      (error) => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
   create(option: any, data: any, callBack: Function): any {
     this.http.post(baseUrl + `admin/user/role/${option}`, data, { observe: 'response', headers: this.headers}).subscribe(
       (response) => {
@@ -90,6 +109,27 @@ export class UserService {
 
   deleteDetail(id: any, callBack: Function): any {
     this.http.delete(baseUrl + `admin/user/${id}`, { observe: 'response', headers: this.headers}).subscribe(
+      response => {
+        if (response.body) {
+          let body: any = Object.assign({}, response.body);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
+  getFreeTeacher(callBack: Function): any{
+    this.http.get(baseUrl + 'admin/user/free-teacher', { observe: 'response', headers: this.headers}).subscribe(
       response => {
         if (response.body) {
           let body: any = Object.assign({}, response.body);

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="title">
-        {{courseData.courseTitle}}
+        Khóa học - {{courseData.courseTitle}} - {{courseData.courseGrade}}
         <span class="tab">
             {{courseData.courseType == 1 ? 'Khóa video' : 'Khóa meeting'}}
         </span>
@@ -16,6 +16,13 @@
             {{courseData.courseSubtitle}}
         </div>
 
+        <div class="content">
+            Thời gian bắt đầu: {{courseData.timeStart}}
+        </div>
+        <div class="content">
+            Thời gian kết thúc: {{courseData.timeEnd }}
+        </div>
+
         <div class="info-image">
             <img src="../../../../assets/image/image-source.png">
             <button class="btn btn-change-image">Thay đổi ảnh</button>
@@ -24,8 +31,12 @@
         <div class="out-line-title">
             <div class="title-content">Danh Sách Khoá Học</div>
             <div class="action-btn">
-                <button class="btn btn-add-chapter" (click)="openModal()">
-                    {{courseData.courseType == 1 ? 'Thêm chương' : 'Thêm lớp học'}}
+                <button class="btn btn-add-chapter" (click)="openModal()" *ngIf="courseData.courseType == 1">
+                    Thêm chương
+                </button>
+
+                <button class="btn btn-add-chapter" (click)="openModal()" *ngIf="courseData.courseType != 1">
+                    Thêm lớp học
                 </button>
             </div>
         </div>
@@ -75,7 +86,7 @@
                         <td class="text-left" style="width: 150px;"> {{ item.totalStudents }}</td>
                         <td class="text-left" style="width: 150px;"> {{ item.classStatus ? 'Còn chỗ' : 'Đầy' }}</td>
                         <td class="text-center" style="width: 150px; justify-content: center">
-                            <button class=" btn-remove">Xoá lớp</button>
+                            <button class=" btn-remove" (click)="deleteClass(item.classId)">Xoá lớp</button>
                         </td>
                     </tr>
                 </tbody>
@@ -84,4 +95,6 @@
     </div>
 </div>
 
+
 <app-course-detail-chaper-form [data]="modalData" [isOpen]="isModalOpen" (closeModal)="onCloseModal()"></app-course-detail-chaper-form>
+<app-lesson-form [data]="modalData" [isOpen]="isModalOpen2" (closeModal)="onCloseModal2()"></app-lesson-form>

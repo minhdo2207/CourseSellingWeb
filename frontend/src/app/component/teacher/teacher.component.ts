@@ -30,8 +30,8 @@ export class TeacherComponent {
   }
 
   getAllData() {
-    let option = { roleId: 2, sortDir: 'desc', page: this.page, userName: this.keySearch, status: this.status };
-    this.userSrv.getAll(option, (res: any) => {
+    let option = { roleId: 2, sortDir: 'desc', page: this.page, userName: this.keySearch, status: Number(this.status) };
+    this.userSrv.getAllTeacher(option, (res: any) => {
       this.teachers = res.elements;
       this.paging = res.paging;
     })

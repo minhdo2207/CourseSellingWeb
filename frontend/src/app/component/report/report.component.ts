@@ -36,6 +36,8 @@ export class ReportComponent {
   topicId = 1;
 
   changeTopicId(e: any){
+    this.from_date = ''
+    this.to_date = '';
     this.topicId = Number(e.target.value);
     this.getAllData();
     this.getFullData();
@@ -71,7 +73,7 @@ export class ReportComponent {
   }
 
   getAllData(){
-    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch};
+    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch, startDate: this.from_date, endDate: this.to_date};
     switch(this.topicId){
       case 1:{
         option = Object.assign({size: 10}, option);
@@ -171,7 +173,8 @@ export class ReportComponent {
   }
 
   onSearch(){
-    // console.log(this.from_date, this.to_date);
+    if(!this.from_date) this.from_date = '';
+    if(!this.to_date) this.to_date = '';
     this.keySearch = this.name;
     this.getAllData();
   }

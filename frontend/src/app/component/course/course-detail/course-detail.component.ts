@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/service/alert.service';
 import { ChapterService } from 'src/app/service/chapter.service';
+import { ClassService } from 'src/app/service/class.service';
 import { CourseService } from 'src/app/service/course.service';
 
 @Component({
@@ -15,7 +17,9 @@ export class CourseDetailComponent {
     private courseSrv: CourseService,
     private route: ActivatedRoute,
     private chapterSrv: ChapterService,
-    private alertSrv: AlertService
+    private alertSrv: AlertService,
+    private datePipe: DatePipe,
+    private classSrv: ClassService
     ) {
     
   };
@@ -32,20 +36,33 @@ export class CourseDetailComponent {
   getAllData(){
     this.courseSrv.getDetail(this.courseId, (res: any) => {
       this.courseData = res;
-      console.log(this.courseData);
+      this.courseData.timeStart = this.datePipe.transform(this.courseData.courseStart.created, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+      this.courseData.timeEnd = this.datePipe.transform(this.courseData.courseEnd.created, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+      // console.log(this.courseData);
     })
   }
 
 
   isModalOpen = false;
+  isModalOpen2 = false;
   modalData: any;
 
   openModal() {
     this.isModalOpen = true;
+    this.modalData = { type: this.courseData.courseType };
+  }
+
+  openModal2(){
+    this.isModalOpen2 = true;
     this.modalData = { /* Your data here */ };
   }
   onCloseModal() {
     this.isModalOpen = false;
+    this.getAllData();
+  }
+
+  onCloseModal2() {
+    this.isModalOpen2 = false;
     this.getAllData();
   }
 
@@ -60,5 +77,14 @@ export class CourseDetailComponent {
         this.getAllData();
       }
     })
+  }
+
+  deleteClass(id: any){
+    this.classSrv.delete((res: any) => {
+      if(res){
+        this.alertSrv.showSuccess('Xóa thành công', 'Thành công!');
+        this.getAllData();
+      }
+    }, id)
   }
 }

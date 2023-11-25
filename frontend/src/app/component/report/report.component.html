@@ -6,7 +6,7 @@
     <div class="out-line-title">
       <div class="title">{{ topic[topicId - 1].title }}</div>
       <div class="action-btn">
-        <div class="data-time" *ngIf="topicId != 3">
+        <div class="data-time" *ngIf="topicId != 1">
           <div style="margin-right: 5px;">
             <label for="">Từ ngày</label>
             <br>
@@ -24,7 +24,7 @@
           <option value="2">Danh sách khóa học</option>
           <option value="3">Danh sách đăng kí khóa học</option>
         </select>
-        <button *ngIf="topicId != 3" class="btn-filter" (click)="onSearch()">Lọc kết quả</button>
+        <button *ngIf="topicId != 1" class="btn-filter" (click)="onSearch()">Lọc kết quả</button>
       </div>
     </div>
 
