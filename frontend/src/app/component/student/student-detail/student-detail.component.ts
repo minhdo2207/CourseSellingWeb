@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
@@ -9,36 +10,44 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class StudentDetailComponent {
   transactionResponseVOS = [
-    { transactionId: 1, courses: '#1234', transactionDate: '11/11/2023', transactionValue: 'Khoá ngữ văn 1', status: '1000000.0'},
+    { transactionId: 1, courses: '', transactionDateShow: '', transactionValue: '', status: '' },
   ];
-  
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
+    private datePipe: DatePipe,
+
   ) {
-    
+
   }
-  
+
   userId: any;
   userAddress = '';
   userPhone = '';
   userEmail = '';
   userName = '';
 
-ngOnInit(){
-  this.userId = this.route.snapshot.paramMap.get('id');
-    
+  ngOnInit() {
+    this.userId = this.route.snapshot.paramMap.get('id');
+
     this.getAllData();
   }
 
   getAllData() {
     this.userService.getDetail(this.userId, (res: any) => {
-        this.userAddress = res.userAddress;
-        this.userPhone = res.userPhone;
-        this.userEmail = res.userEmail;
-        this.userName = res.userName;
-        this.transactionResponseVOS = res.transactionResponseVOS;
-      })
+      // item.showTime = 
+      this.userAddress = res.userAddress;
+      this.userPhone = res.userPhone;
+      this.userEmail = res.userEmail;
+      this.userName = res.userName;
+      this.transactionResponseVOS = res.transactionResponseVOS.map((item: any) => {
+        let i = item;
+
+        i.transactionDateShow = this.datePipe.transform(i.transactionDate, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+        return i
+      });
+    })
   }
 
   convertStatus(status: any) {

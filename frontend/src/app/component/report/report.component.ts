@@ -206,7 +206,32 @@ export class ReportComponent {
   }
 
   exportFile() {
-    this.excelService.exportToExcel(this.fullData, 'Báo cáo', 'Sheet1');
+    let dataFile: any;
+    if (this.topicId == 1) dataFile = this.fullData
+
+    if (this.topicId == 2) {
+      dataFile = this.fullData.map(data => {
+        let item = data
+        item.courseType = data.courseType == 1 ? 'Khóa video' : 'Khóa meeting'
+        return item
+      })
+    }
+
+    if (this.topicId == 3) {
+      dataFile = this.fullData.map(data => {
+        let item = data
+
+        if (data.status == 1) item.showStatus = 'Đã Tham Gia';
+        if (data.status == 2) item.showStatus = 'Đã Hủy';
+        if (data.status == 0) item.showStatus = 'Đang Chờ Lớp';
+
+        item.showTime = this.datePipe.transform(item.created, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+        delete item.created;
+        delete item.status;
+        return item;
+      })
+    } 
+    this.excelService.exportToExcel(dataFile, 'Báo cáo', 'Sheet');
   }
 
   changeTypeCourse(type: any){

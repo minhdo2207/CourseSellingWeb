@@ -36,9 +36,9 @@ export class CourseDetailComponent {
   getAllData(){
     this.courseSrv.getDetail(this.courseId, (res: any) => {
       this.courseData = res;
-      this.courseData.timeStart = this.datePipe.transform(this.courseData.courseStart.created, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
-      this.courseData.timeEnd = this.datePipe.transform(this.courseData.courseEnd.created, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
-      // console.log(this.courseData);
+      this.courseData.timeStart = this.datePipe.transform(this.courseData.courseStart, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+      this.courseData.timeEnd = this.datePipe.transform(this.courseData.courseEnd, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+      console.log(this.courseData);
     })
   }
 
@@ -86,5 +86,13 @@ export class CourseDetailComponent {
         this.getAllData();
       }
     }, id)
+  }
+
+  convertStatus(numberStudent: any): string {
+    if (30 > numberStudent) {
+      return `Còn ${30 -numberStudent} chỗ`
+    } else {
+      return 'Đã hết chỗ'
+    }
   }
 }
