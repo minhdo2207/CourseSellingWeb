@@ -119,6 +119,7 @@ public class ClassServiceImpl implements ClassService {
         }
         ZoomClass zoomClass = classOptional.get();
         ClassDetailResponseVO classDetailResponseVO = mapper.map(zoomClass, ClassDetailResponseVO.class);
+        classDetailResponseVO.setTutorName(zoomClass.getTutor().getUser().getUserName());
         // Map ZoomEnrollment to UserResponseVO for students
         List<UserResponseVO> students = classDetailResponseVO.getZoomEnrollments().stream()
                 .map(enrollment -> mapper.map(enrollment.getEnrollment().getUser(), UserResponseVO.class))
