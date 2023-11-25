@@ -11,6 +11,7 @@ import neu.com.vo.response.course.EnrollmentResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -28,7 +29,13 @@ public class EnrollementServiceImpl implements EnrollmentService {
     @Override
     public PagedResult<EnrollmentResponseVO> getPagingEnrollment(FindEnrollmentRequestVo findEnrollmentRequestVo, SortingAndPagingRequestVO paging) {
         PagedResult<EnrollmentResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
-                pageable -> enrollmentRepository.findEnrollments(findEnrollmentRequestVo, pageable),
+                pageable -> {
+                    try {
+                        return enrollmentRepository.findEnrollments(findEnrollmentRequestVo, pageable);
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
                 data -> {
                     List<EnrollmentResponseVO> enrollmentResponseVOList = mapper.mapAsList(data, EnrollmentResponseVO.class);
                     enrollmentResponseVOList.forEach(enrollmentResponseVO -> {

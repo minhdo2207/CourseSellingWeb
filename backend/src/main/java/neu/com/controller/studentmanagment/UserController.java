@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import neu.com.service.user.UserService;
 import neu.com.utils.Constants;
 import neu.com.vo.request.SortingAndPagingRequestVO;
+import neu.com.vo.request.course.FindTeacherRequestVo;
 import neu.com.vo.request.course.FindUserRequestVo;
 import neu.com.vo.request.course.UserCreateRequestVO;
-import neu.com.vo.request.course.UserUpdateRequestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +21,18 @@ public class UserController {
      * Search by name or type
      */
     @GetMapping()
-    public Object getPagingCourse(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging) {
-        return userService.getPagingCourse(findUserRequestVo, paging);
+    public Object getPagingUsers(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging) {
+        return userService.getPagingUsers(findUserRequestVo, paging);
+
+    }
+
+    /**
+     * Get all user
+     * Search by name or type
+     */
+    @GetMapping("/teacher")
+    public Object getPagingTeachers(FindTeacherRequestVo findTeacherRequestVo, SortingAndPagingRequestVO paging) {
+        return userService.getPagingTeachers(findTeacherRequestVo, paging);
 
     }
 

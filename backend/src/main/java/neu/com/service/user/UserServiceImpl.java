@@ -12,6 +12,7 @@ import neu.com.repository.UserRepository;
 import neu.com.utils.Constants;
 import neu.com.utils.common.ResponseUtil;
 import neu.com.vo.request.SortingAndPagingRequestVO;
+import neu.com.vo.request.course.FindTeacherRequestVo;
 import neu.com.vo.request.course.FindUserRequestVo;
 import neu.com.vo.request.course.UserCreateRequestVO;
 import neu.com.vo.response.PagedResult;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder encoder;
 
     @Override
-    public PagedResult<UserResponseVO> getPagingCourse(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging) {
+    public PagedResult<UserResponseVO> getPagingUsers(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging) {
         PagedResult<UserResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
                 pageable -> userRepository.findUsersByUserName(findUserRequestVo, pageable),
                 data -> mapper.mapAsList(data, UserResponseVO.class));
@@ -137,7 +138,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public PagedResult<UserReportResponseVO> getPagingUserReport(FindUserRequestVo findUserRequestVo, SortingAndPagingRequestVO paging) {
         PagedResult<UserReportResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
-                pageable -> userRepository.findUsersByUserName(findUserRequestVo, pageable),
+                pageable -> userRepository.findTeacherByUserName(findUserRequestVo, pageable),
                 data -> {
                     List<UserReportResponseVO> userReportResponseVOList = mapper.mapAsList(data, UserReportResponseVO.class);
                     userReportResponseVOList.forEach(
@@ -167,5 +168,12 @@ public class UserServiceImpl implements UserService {
         return mapper.mapAsList(freeTutors, UserResponseVO.class);
     }
 
+    @Override
+    public Object getPagingTeachers(FindTeacherRequestVo findTeacherRequestVo, SortingAndPagingRequestVO paging) {
+        PagedResult<TutorDetailResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
+                pageable -> userRepository.findTutorByUserName(findTeacherRequestVo, pageable),
+                data -> mapper.mapAsList(data, TutorDetailResponseVO.class));
+        return result;
+    }
 
 }
