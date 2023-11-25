@@ -172,7 +172,12 @@ public class UserServiceImpl implements UserService {
     public Object getPagingTeachers(FindTeacherRequestVo findTeacherRequestVo, SortingAndPagingRequestVO paging) {
         PagedResult<TutorDetailResponseVO> result = ResponseUtil.commonPaging(paging, DEFAULT_SORT_KEY,
                 pageable -> userRepository.findTutorByUserName(findTeacherRequestVo, pageable),
-                data -> mapper.mapAsList(data, TutorDetailResponseVO.class));
+                data -> {
+                    List<TutorDetailResponseVO> tutorDetailResponseVOS = mapper.mapAsList(data, TutorDetailResponseVO.class);
+                    tutorDetailResponseVOS.forEach(tutorDetailResponseVO ->
+                            tutorDetailResponseVO.setTeachingStatus(findTeacherRequestVo.getStatus()));
+                    return tutorDetailResponseVOS;
+                });
         return result;
     }
 
