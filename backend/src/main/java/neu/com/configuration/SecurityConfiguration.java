@@ -49,17 +49,7 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence rawPassword) {
-                return rawPassword.toString();
-            }
-
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                return rawPassword.equals(encodedPassword);
-            }
-        };
+        return new BCryptPasswordEncoder();
     }
 
 
@@ -70,7 +60,7 @@ public class SecurityConfiguration {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/v1/auth/**").permitAll().anyRequest().authenticated());
+                        auth -> auth.requestMatchers("/v1/auth/**").permitAll().anyRequest().permitAll());
 
         http.authenticationProvider(authenticationProvider());
 
