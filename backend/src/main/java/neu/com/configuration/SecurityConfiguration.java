@@ -70,7 +70,7 @@ public class SecurityConfiguration {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/v1/auth/**").permitAll().anyRequest().authenticated());
+                        auth -> auth.requestMatchers("/v1/auth/**").permitAll().anyRequest().permitAll());
 
         http.authenticationProvider(authenticationProvider());
 
