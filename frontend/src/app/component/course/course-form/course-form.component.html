@@ -1,0 +1,36 @@
+<!-- student-modal.component.html -->
+<div class="overlay" *ngIf="isOpen">
+    <div class="modal">
+        <div>
+            <div class="title-form">{{data.title}}</div>
+            <form (ngSubmit)="onSubmit()" class="my-form">
+                <div class="out-line-ip">
+                    <label for="courseName" class="label-ip">Tên khóa học:</label>
+                    <input class="ip" type="text" id="courseName" name="courseName" [(ngModel)]="name" required>
+                </div>
+
+                <div class="out-line-ip">
+                    <label for="coursePrice">Giá khóa học:</label>
+                <input type="number" id="coursePrice" name="coursePrice" [(ngModel)]="price" required>
+                </div>
+
+                <div class="out-line-ip" *ngIf="data.type === 'CREATE'">
+                    <label for="coursePrice">Lớp học:</label>
+                <input type="number" id="courseGrade" name="courseGrade" [(ngModel)]="grade" required>
+                </div>
+
+                <div class="out-line-ip" *ngIf="data.type === 'CREATE'">
+                    <label for="courseCategory">Thể loại khóa học:</label>
+                    <select id="courseCategory" name="courseCategory" [(ngModel)]="courseCategory" required>
+                        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+                    </select>
+                </div>
+                
+                <div class="action-btn">
+                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <button type="submit" class="btn btn-add">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,162 @@
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 40px;
+}
+
+thead {
+    width: 100%;
+    background-color: #E1CDE4 !important;
+    color: #FFF;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+}
+
+tfoot {
+    width: 100%;
+    background: #DBD0DD;
+    display: flex;
+    flex-direction: row-reverse;
+
+
+}
+
+tfoot button {
+    cursor: pointer;
+    border-radius: 10px;
+    background: #C14242;
+    border: none;
+    outline: none;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 10px 14px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    color: #FFF;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 8px;
+    margin: 10px 20px;
+}
+
+th {
+    padding: 20px;
+}
+
+tbody {
+    width: 100%;
+}
+
+td {
+    padding: 20px;
+    color: #5E638E;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    word-wrap: break-word;
+}
+
+.contact {
+    display: flex;
+    justify-content: space-between;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.btn-detail {
+    border-radius: 10px;
+    background: #D9D9D9;
+    color: #FFF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-edit {
+    border-radius: 10px;
+    background: #E1C499;
+    color: #FFF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn-delete {
+    border-radius: 10px;
+    background: red;
+    color: #FFF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-establish {
+    border-radius: 10px;
+    background: #48B9DD;
+    color: #FFF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-remove {
+    border-radius: 10px;
+    background: #DD4848;
+    color: #FFF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.img-btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}

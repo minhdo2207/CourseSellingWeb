@@ -1,0 +1,16 @@
+<div 
+    id="chart"
+    style="display: flex; justify-content: center; margin-top: 20px;"
+>
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [labels]="chartOptions.labels"
+      [responsive]="chartOptions.responsive"
+      [legend]="chartOptions.legend"
+      [title]="chartOptions.title"
+    ></apx-chart>
+
+  </div>
+
+  <div style="text-align: center; margin-top: 20px; font-weight: 700;">Tổng số học sinh: {{totalStudent}}</div>

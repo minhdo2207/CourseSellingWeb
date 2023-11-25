@@ -1,0 +1,48 @@
+<div class="layout-container" *ngIf="isAuthentication">
+  <div class="sider">
+      <div class="logo">
+        <img src="../assets/image/logo.svg">
+      </div>
+    <ul>
+      <li class="item-sibar"><a routerLink="/"><img src="../assets/image/icon-home.svg"> Bảng điều khiển</a></li>
+      <li class="item-sibar"><a routerLink="/student/list"><img src="../assets/image/icon-hv.svg"> Học viên </a></li>
+      <li class="item-sibar"><a routerLink="/teacher/list"><img src="../assets/image/icon-gv.svg"> Giáo viên</a></li>
+      <li class="item-sibar"><a routerLink="/course/list"><img src="../assets/image/icon-ckh.svg"> Các khoá học</a></li>
+      <li class="item-sibar"><a routerLink="/report/list"><img src="../assets/image/icon-bc.svg"> Báo cáo</a></li>
+      <li class="item-sibar" (click)="logout()" style="cursor: pointer;"><a><img src="../assets/image/icon-bc.svg"> Đăng xuất</a></li>
+    </ul>
+    <div class="logo-bot">
+      <img src="../assets/image/logo.svg">
+    </div>
+  </div>
+  
+  <div class="layout">
+    <router-outlet></router-outlet>
+
+  </div>
+</div>
+
+
+<div class="body-login" *ngIf="!isAuthentication">
+  <img src="../assets/image/header-login.svg" class="img-header">
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <form>
+    <img src="../assets/image/text-login.svg" >
+
+    <label class="labelName" for="labelName">Username</label>
+    <input class="input-login" type="text" placeholder="Email or Phone" id="username" name="username" [(ngModel)]="username">
+
+    <label class="labelName" for="labelName">Password</label>
+    <input class="input-login" type="password" placeholder="Password" id="password" name="password" [(ngModel)]="password">
+
+    <button class="btn-login" (click)="login()">Đăng nhập <img src="../assets/image/icon-next.svg" alt=""></button>
+    <img class="img1" src="../assets/image/icon--1.svg">
+    <img class="img2" src="../assets/image/icon--2.svg">
+    <img class="img3" src="../assets/image/icon--3.svg">
+  </form>
+</div>
+
+<app-modal></app-modal>

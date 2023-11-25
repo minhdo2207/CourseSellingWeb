@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="title">Giáo Viên</div>
+
+    <div class="statistical">
+        <div class="outline-input-search">
+            <img src="../../../assets/image/icon-search.svg">
+            <input id="search" name="search" type="text" placeholder="Tìm kiếm..." class="ip-search" [(ngModel)]="name" (keyup.enter)="onSearch()">
+        </div>
+        <div class="action">
+            <button class="btn btn-load" (click)="refreshData()">
+                <img src="../../../assets/image/icon-reload.svg">
+                Tải lại danh sách
+            </button>
+            <button class="btn btn-add" (click)="openModal()">
+                <img src="../../../assets/image/icon-add.svg">
+                Thêm giáo viên
+            </button>
+        </div>
+    </div>
+
+    <div class="out-line-title">
+      <div class="title">Danh Sách Giáo Viên</div>
+      <div class="action-btn">
+        <select name="typeTeacher" (change)="changeStatusTeacher($event)" id="typeTeacher" style="margin-right: 20px;">
+          <option value="all">Tất cả</option>
+          <option value="1">Đã được phân lớp</option>
+          <option value="0">Chưa được phân lớp</option>
+        </select>
+        <button class="btn-filter" (click)="onSearch()">Lọc kết quả</button>
+      </div>
+    </div>
+
+    <table class="table-custom">
+        <thead>
+          <tr class="row">
+            <th class="text-left" style="width: 100px;">Họ và Tên</th>
+            <th class="text-left" style="width: 200px;">Địa chỉ</th>
+            <th class="text-center" style="width: 120px;">Trạng thái</th>
+            <th class="text-center" style="width: 80px;">Liên hệ</th>
+            <th class="text-center" style="width: 170px;">Chi tiết thông tin</th>
+            <th class="text-center" style="width: 300px;">Hành động</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let item of teachers" class="row">
+            <td class="text-left" style="width: 180px;">{{ item.userName }}</td>
+            <td class="text-left"  style="width: 200px;"> {{ item.userAddress }}</td>
+            <td class="text-left"  style="width: 120px;">{{item.teachingStatus == 0 ? 'Chưa phân lớp' : 'Đã phân lớp'}}</td>
+            <td class="text-center contact"  style="width: 80px; ;">
+              <img class="img-btn" src="../../../assets/image/icon-phone.svg" style="margin-right: 10px;" (click)="showContact(item.userPhone)">
+              <img class="img-btn" src="../../../assets/image/icon-mail.svg" (click)="showContact(item.userEmail)">
+            </td>
+            <td class="text-center"  style="width: 170px; justify-content: center">
+                <button class="btn-detail" (click)="onDetail(item.userId)">Chi tiết</button>
+            </td>
+            <td class="text-center" style="width: 300px; justify-content: center">
+                <button class="btn-edit" (click)=" openModal(item)">Chỉnh sửa</button>
+                <button class="btn-delete" (click)="deleteRecord(item.userId)">Xóa</button>
+
+            </td>
+          </tr>
+        </tbody>
+        <tfoot style="display: flex; justify-content: space-between;">
+          <div> </div>
+          <div style="display: flex; justify-content: space-between;">
+            <p style="margin-left: 20px;">Tổng số {{paging.totalRecord}} bản ghi</p>
+            <div
+              style="display: flex; align-items: center;"
+            >
+              <button (click)="previousPage()"><</button>
+              <div>Hiển thị trang thứ {{paging.page}} / {{paging.totalPage}} trang</div>
+              <button (click)="nextPage()">></button>
+            </div>
+          </div>
+      </tfoot>
+      </table>
+
+</div>
+
+<app-teacher-form [data]="modalData" [isOpen]="isModalOpen" (closeModal)="onCloseModal()"></app-teacher-form>

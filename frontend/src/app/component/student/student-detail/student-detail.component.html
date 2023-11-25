@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="title">Chi tiết học viên</div>
+
+    <div class="info">
+        <div class="info-left">
+          <div class="out-line-avatar">
+            <img src="../../../../assets/image/avatar-demo.svg" class="avatar">
+          </div>
+          <div class="name">{{userName}}</div>
+        </div>
+        <div class="info-right">
+          <div class="items">
+            <div class="item">
+              <img src="../../../../assets/image/icon-mail-smail.svg">
+              <div class="item-text">{{userEmail}}</div>
+            </div>
+            <div class="item">
+              <img src="../../../../assets/image/icon-phone-small.svg">
+              <div class="item-text">Số điện thoại: {{userPhone}}</div>
+            </div>
+            <div class="item">
+              <img src="../../../../assets/image/icon-location-small.svg">
+              <div class="item-text">Địa chỉ: {{userAddress}}</div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="out-line-title">
+      <div class="title">Lịch sử thanh toán</div>
+    </div>
+
+    <table class="table-custom">
+        <thead>
+          <tr class="row">
+            <th class="text-left" style="width: 20%;">Giao dịch số</th>
+            <th class="text-left" style="width: 20%;">Ngày thực hiện</th>
+            <th class="text-left" style="width: 20%;">Tên khoá học</th>
+            <th class="text-left" style="width: 20%;">Trạng thái giao dịch</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr *ngFor="let item of transactionResponseVOS" class="row">
+            <td class="text-left" style="width: 20%;">{{ item.transactionId }}</td>
+            <td class="text-left"  style="width: 20%;"> {{ item.transactionDate }}</td>
+            <td class="text-left"  style="width: 20%;"> {{ item.transactionValue }}</td>
+            <td class="text-left"  style="width: 20%;"> {{ convertStatus(item.status) }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+            <div style="height: 56px;"></div>
+        </tfoot>
+      </table>
+
+</div>
+

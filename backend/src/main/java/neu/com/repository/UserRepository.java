@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 import neu.com.model.QUser;
 import neu.com.model.User;
+import neu.com.vo.request.course.FindTeacherRequestVo;
 import neu.com.vo.request.course.FindUserRequestVo;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Page;
@@ -30,7 +31,7 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
     default Page<User> findUsersByUserName(FindUserRequestVo findUserRequestVo, Pageable pageable) {
         BooleanExpression expression = Expressions.asBoolean(true).isTrue();
         if (ObjectUtils.isNotEmpty(findUserRequestVo.getUserName())) {
-            BooleanExpression matchKeyword = QUser.user.userName.containsIgnoreCase(findUserRequestVo.getUserName());
+            BooleanExpression matchKeyword = QUser.user.userName.containsIgnoreCase(findUserRequestVo.getUserName()).or(QUser.user.userPhone.containsIgnoreCase(findUserRequestVo.getUserName()));
             expression = expression.and(matchKeyword);
         }
         if (ObjectUtils.isNotEmpty(findUserRequestVo.getRoleId())) {
@@ -45,5 +46,31 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
 
     Optional<User> findByUserName(String username);
 
+    default Page<User> findTutorByUserName(FindTeacherRequestVo findTeacherRequestVo, Pageable pageable) {
+        BooleanExpression expression = Expressions.asBoolean(true).isTrue();
+        if (ObjectUtils.isNotEmpty(findTeacherRequestVo.getUserName())) {
+            BooleanExpression matchKeyword = QUser.user.userName.containsIgnoreCase(findTeacherRequestVo.getUserName()).or(QUser.user.userPhone.containsIgnoreCase(findTeacherRequestVo.getUserName()));
+            ;
+            expression = expression.and(matchKeyword);
+        }
+        if (ObjectUtils.isNotEmpty(findTeacherRequestVo.getStatus())) {
+            if (findTeacherRequestVo.getStatus() == 0L) {
+                expression = expression.and(QUser.user.tutor.zoomClasses.size().eq(0));
+            } else expression = expression.and(QUser.user.tutor.zoomClasses.size().gt(0));
+        }
+        expression = expression.and(QUser.user.roles.any().roleId.eq(2L));
+        return this.findAll(expression, pageable);
+    }
 
+    default Page<User> findTeacherByUserName(FindUserRequestVo findUserRequestVo, Pageable pageable) {
+        BooleanExpression expression = Expressions.asBoolean(true).isTrue();
+        if (ObjectUtils.isNotEmpty(findUserRequestVo.getUserName())) {
+            BooleanExpression matchKeyword = QUser.user.userName.containsIgnoreCase(findUserRequestVo.getUserName());
+            expression = expression.and(matchKeyword);
+        }
+
+        expression = expression.and(QUser.user.roles.any().roleId.eq(1L));
+
+        return this.findAll(expression, pageable);
+    }
 }
