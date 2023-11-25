@@ -17,6 +17,7 @@ export class TeacherComponent {
   page = 1;
   name: string = '';
   keySearch: string = '';
+  status = '';
 
   constructor(
     private alertSrv: AlertService,
@@ -29,7 +30,7 @@ export class TeacherComponent {
   }
 
   getAllData() {
-    let option = { roleId: 2, sortDir: 'desc', page: this.page, userName: this.keySearch };
+    let option = { roleId: 2, sortDir: 'desc', page: this.page, userName: this.keySearch, status: this.status };
     this.userSrv.getAll(option, (res: any) => {
       this.teachers = res.elements;
       this.paging = res.paging;
@@ -105,6 +106,22 @@ export class TeacherComponent {
   }
 
   changeStatusTeacher(e: any){
-
+    switch(e.target.value){
+      case 'all':{
+        this.status = '';
+        this.getAllData();
+        break;
+      };
+      case '1':{
+        this.status = '1';
+        this.getAllData();
+        break;
+      };
+      case '0':{
+        this.status = '0';
+        this.getAllData();
+        break;
+      }
+    }
   }
 }
