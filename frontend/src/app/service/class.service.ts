@@ -63,4 +63,25 @@ export class ClassService {
       }
     )
   }
+
+  edit(data: any, callBack?: Function, option?: any): any {
+    this.http.put(baseUrl + `admin/class/${option}`, data, { observe: 'response', headers: this.headers }).subscribe(
+      response => {
+        if (response.body) {
+          let body: any = Object.assign({}, response.body);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
 }
