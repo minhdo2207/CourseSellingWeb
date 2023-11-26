@@ -31,11 +31,11 @@
         <div class="out-line-title">
             <div class="title-content">Danh Sách Khoá Học</div>
             <div class="action-btn">
-                <button class="btn btn-add-chapter" (click)="openModal()" *ngIf="courseData.courseType == 1">
+                <button class="btn btn-add-chapter" (click)="openModal('Thêm mới chương')" *ngIf="courseData.courseType == 1">
                     Thêm chương
                 </button>
 
-                <button class="btn btn-add-chapter" (click)="openModal()" *ngIf="courseData.courseType != 1">
+                <button class="btn btn-add-chapter" (click)="openModal('Thêm mới lớp học')" *ngIf="courseData.courseType != 1">
                     Thêm lớp học
                 </button>
             </div>
@@ -87,7 +87,7 @@
                         <td class="text-left" style="width: 120px;"> {{ convertStatus(item.totalStudents) }}</td>
                         <td class="text-center" style="width: 350px; display: flex; justify-content: center">
                             <button class="btn-edit"  (click)="onDetailClass(item.classId)" style="background-color: #98ffb9;">Chi tiết</button> 
-                            <button class="btn-edit"  (click)="openModal(item)">Chỉnh sửa</button> 
+                            <button class="btn-edit"  (click)="openModal('Chỉnh sửa thông tin',item)">Chỉnh sửa</button> 
                             <button class=" btn-remove" (click)="deleteClass(item.classId)">Xoá lớp</button>
                         </td>
                     </tr>
@@ -97,6 +97,8 @@
     </div>
 </div>
 
+<!-- form thiết lập khóa học  -->
+<app-course-detail-chaper-form [data]="modalData" [isOpen]="isModalOpen" (closeModalS)="onCloseModal()"></app-course-detail-chaper-form>
 
-<app-course-detail-chaper-form [data]="modalData" [isOpen]="isModalOpen" (closeModal)="onCloseModal()"></app-course-detail-chaper-form>
+<!-- form thiết lập bài giảng -->
 <app-lesson-form [data]="modalData" [isOpen]="isModalOpen2" (closeModal)="onCloseModal2()"></app-lesson-form>

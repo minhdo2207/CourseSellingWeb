@@ -13,10 +13,10 @@ import { UserService } from 'src/app/service/user.service';
 export class CourseDetailChaperFormComponent {
   @Input() data: any;
   @Input() isOpen: boolean = true;
-  @Output() closeModal = new EventEmitter<void>();
+  @Output() closeModalS = new EventEmitter<void>();
 
   onCloseModal() {
-    this.closeModal.emit();
+    this.closeModalS.emit();
   }
 
   courseId: any;
