@@ -7,6 +7,7 @@ import neu.com.model.Transaction;
 import neu.com.model.Tutor;
 import neu.com.model.User;
 import neu.com.repository.RoleRepository;
+import neu.com.repository.TransactionRepository;
 import neu.com.repository.TutorRepository;
 import neu.com.repository.UserRepository;
 import neu.com.utils.Constants;
@@ -36,6 +37,8 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     @Autowired
     private MappingFacade mapper;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -59,7 +62,9 @@ public class UserServiceImpl implements UserService {
         if (user.getRoles().stream().anyMatch(role -> role.getRoleId().equals(1L))) {
             //Student
             StudentDetailResponseVO studentDetailResponseVO = mapper.map(user, StudentDetailResponseVO.class);
-            studentDetailResponseVO.setTransactionResponseVOS(mapper.mapAsList(user.getTransactions(), TransactionResponseVO.class));
+            List<TransactionResponseVO> transactionResponseVOs = mapper.mapAsList(user.getTransactions(), TransactionResponseVO.class);
+            transactionResponseVOs.forEach(transactionResponseVO -> transactionResponseVO.setCourses(mapper.map(transactionRepository.findById(transactionResponseVO.getTransactionId()).get().getCourse(), CourseResponseVO.class)));
+            studentDetailResponseVO.setTransactionResponseVOS(transactionResponseVOs);
             return studentDetailResponseVO;
         } else if (user.getRoles().stream().anyMatch(role -> role.getRoleId().equals(2L))) {
             //Tutor
