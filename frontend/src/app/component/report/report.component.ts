@@ -236,11 +236,13 @@ export class ReportComponent {
   }
 
   changeTypeCourse(type: any){
+    this.page = 1;
     this.typeCourse = type;
     this.getAllData();
   }
 
   changeTypeStatus(id: any){
+    this.page = 1;
     this.status = id;
     this.getAllData();
   }
