@@ -6,7 +6,6 @@ import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 import neu.com.model.Course;
 import neu.com.model.Enrollment;
-import neu.com.model.QCourse;
 import neu.com.model.QEnrollment;
 import neu.com.utils.common.DateTimeUtils;
 import neu.com.vo.request.FindEnrollmentRequestVo;
@@ -45,6 +44,9 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>, Q
         }
         if (ObjectUtils.isNotEmpty(findEnrollmentRequestVo.getEndDate())) {
             expression = expression.and(QEnrollment.enrollment.created.before(DateTimeUtils.getDateFromIsoDate(findEnrollmentRequestVo.getEndDate())));
+        }
+        if (ObjectUtils.isNotEmpty(findEnrollmentRequestVo.getStatus())) {
+            expression = expression.and(QEnrollment.enrollment.status.eq(findEnrollmentRequestVo.getStatus()));
         }
         return this.findAll(expression, pageable);
     }

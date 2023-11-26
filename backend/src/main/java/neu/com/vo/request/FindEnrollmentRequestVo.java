@@ -8,4 +8,5 @@ public class FindEnrollmentRequestVo {
     private String courseName;
     private String startDate;
     private String endDate;
+    private Long status;
 }
