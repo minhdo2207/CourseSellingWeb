@@ -47,10 +47,25 @@ export class CourseDetailComponent {
   isModalOpen2 = false;
   modalData: any;
 
-  openModal() {
+  openModal(record?: any) {
+    if (record) {
+      this.modalData = {
+        record: record,
+        type: this.courseData.courseType,
+        title: 'Chỉnh sửa thông tin',
+        typeForm: 'UPDATE'
+      };
+    } else {
+      this.modalData = {
+        title: 'Thêm học viên mới',
+        type: this.courseData.courseType,
+        typeForm: 'CREATE'
+      };
+    }
+
     this.isModalOpen = true;
-    this.modalData = { type: this.courseData.courseType };
   }
+
 
   openModal2(){
     this.isModalOpen2 = true;
