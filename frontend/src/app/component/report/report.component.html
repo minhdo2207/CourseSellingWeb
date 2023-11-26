@@ -43,6 +43,25 @@
       </div>
     </div>
 
+    <div class="tab" *ngIf="topicId == 3">
+      <div class="tab-item" (click)="changeTypeStatus('')">
+        <div class="square" style="background-color: red;"></div>
+        <p>Tất cả</p>
+      </div>
+      <div class="tab-item" (click)="changeTypeStatus('1')">
+        <div class="square" style="background-color: blue;"></div>
+        <p>Đã tham gia</p>
+      </div>
+      <div class="tab-item" (click)="changeTypeStatus('2')">
+        <div class="square" style="background-color: green;"></div>
+        <p>Đã hủy</p>
+      </div>
+      <div class="tab-item" (click)="changeTypeStatus('0')">
+        <div class="square" style="background-color: orange;"></div>
+        <p>Đang chờ lớp</p>
+      </div>
+    </div>
+
     <table class="table-custom" *ngIf="topicId == 1">
         <thead>
           <tr class="row">

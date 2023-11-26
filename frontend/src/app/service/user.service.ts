@@ -149,4 +149,25 @@ export class UserService {
     )
   }
 
+  changeStatus(option: any, callBack: Function, data: any): any{
+    this.http.put(baseUrl + `admin/transaction/${option}`, data, { observe: 'response', headers: this.headers}).subscribe(
+      response => {
+        if (response) {
+          let body: any = Object.assign({}, response);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
 }
