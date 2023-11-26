@@ -50,7 +50,7 @@ export class CourseDetailChaperFormComponent {
       }
     }else{
       this.classSrv.create(
-        {className: this.chapterTitle, classLink: this.chapterNo, tutorId: this.tutorId},
+        {className: this.chapterNo, classLink: this.chapterTitle, tutorId: this.tutorId},
         (res: any) => {
           if(res){
             this.alerSrv.showSuccess('Thêm mới lớp thành công', 'Thành công!');

@@ -31,7 +31,7 @@ public class Role extends BaseEnt implements Serializable {
     @Column(name = "role_id")
     private Long roleId;
 
-    @Column(name = "role_name", nullable = false, length = 255)
+    @Column(name = "role_name", nullable = false, length = 20)
     private String roleName;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")

@@ -35,10 +35,10 @@ public class Lesson extends BaseEnt implements Serializable {
     @JoinColumn(name = "chapter_id", nullable = false)
     private Chapter chapter;
 
-    @Column(name = "lesson_title", nullable = false)
+    @Column(name = "lesson_title", nullable = false,length = 100)
     private String lessonTitle;
 
-    @Column(name = "lesson_video_link", nullable = false)
+    @Column(name = "lesson_video_link", nullable = false,length = 255)
     private String lessonVideoLink;
 
     @Column(name = "lesson_video_view", columnDefinition = "INT DEFAULT 0")

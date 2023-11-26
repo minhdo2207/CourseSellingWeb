@@ -38,7 +38,7 @@ public class Chapter extends BaseEnt implements Serializable {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @Column(name = "chapter_title", nullable = false)
+    @Column(name = "chapter_title", nullable = false,length = 100)
     private String chapterTitle;
 
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
