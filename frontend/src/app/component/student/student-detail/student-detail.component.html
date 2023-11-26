@@ -41,10 +41,17 @@
         </thead>
         <tbody >
           <tr *ngFor="let item of transactionResponseVOS" class="row">
-            <td class="text-left" style="width: 20%;">{{ item.transactionId }}</td>
+            <td class="text-left" style="width: 10%;">{{ item.transactionId }}</td>
             <td class="text-left"  style="width: 20%;"> {{ item?.transactionDateShow }}</td>
             <td class="text-left"  style="width: 20%;"> {{ item.transactionValue }}</td>
-            <td class="text-left"  style="width: 20%;"> {{ convertStatus(item.status) }}</td>
+            <td class="text-left"  style="width: 30%;"> 
+              {{ convertStatus(item.status) }}
+              <select name="status" (change)="changeStatus($event)">
+                <option value="0">Chưa thanh toán</option>
+                <option value="1">Thành công</option>
+                <option value="2">Thất bại</option>
+              </select>
+            </td>
           </tr>
         </tbody>
         <tfoot>

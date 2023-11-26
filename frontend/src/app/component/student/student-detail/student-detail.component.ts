@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/service/alert.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class StudentDetailComponent {
     private route: ActivatedRoute,
     private userService: UserService,
     private datePipe: DatePipe,
-
+    private alertSrv: AlertService
   ) {
 
   }
@@ -54,5 +55,14 @@ export class StudentDetailComponent {
     if (status == '0') return 'Chưa Thanh Toán ';
     if (status == '1') return 'Thành Công';
     return 'Thất Bại ';
+  }
+
+  changeStatus(e: any){
+    this.userService.changeStatus(this.userId, (res: any) => {
+      if(res){
+        this.alertSrv.showSuccess('Thay đổi trạng thái thành công', 'Thành công!');
+        this.getAllData();
+      }
+    }, {status: e.target.value})
   }
 }

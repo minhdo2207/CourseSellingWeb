@@ -29,7 +29,7 @@ export class ReportComponent {
   to_date: any;
 
   topic = [
-    {id: 1, title: 'Báo cáo học viên'},
+    {id: 1, title: 'Báo cáo doanh thu'},
     {id: 2, title: 'Báo cáo doanh thu'},
     {id: 3, title: 'Báo cáo đăng ký khóa học'}
   ]
@@ -237,5 +237,9 @@ export class ReportComponent {
   changeTypeCourse(type: any){
     this.typeCourse = type;
     this.getAllData();
+  }
+
+  changeTypeStatus(id: any){
+
   }
 }
