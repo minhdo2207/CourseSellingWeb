@@ -49,30 +49,51 @@ export class CourseDetailChaperFormComponent {
         )
       }
     }else{
-      this.classSrv.create(
-        {className: this.chapterNo, classLink: this.chapterTitle, tutorId: this.tutorId},
-        (res: any) => {
-          if(res){
-            this.alerSrv.showSuccess('Thêm mới lớp thành công', 'Thành công!');
-            this.onCloseModal();
-          }
-        },
-        this.courseId
-      )
+      if(this.data.typeForm == 'UPDATE'){
+        this.classSrv.edit(
+          {className: this.chapterNo, classLink: this.chapterTitle, tutorId: this.tutorId},
+          (res: any) => {
+            if(res){
+              this.alerSrv.showSuccess('Chỉnh sửa lớp thành công', 'Thành công!');
+              this.onCloseModal();
+            }
+          },
+          this.data.record.classId
+        )
+      }else{
+        this.classSrv.create(
+          {className: this.chapterNo, classLink: this.chapterTitle, tutorId: this.tutorId},
+          (res: any) => {
+            if(res){
+              this.alerSrv.showSuccess('Thêm mới lớp thành công', 'Thành công!');
+              this.onCloseModal();
+            }
+          },
+          this.courseId
+        )
+      }
     }
   }
 
   ngOnChanges(){
-    // console.log(this.data);
+    console.log(this.data);
     this.type = this.data.type;
     if(this.type == 2){
       this.userSrv.getFreeTeacher((res: any) => {
         if(res){
           this.teachers = res.body;
         }
-      })
+      });
+      this.chapterTitle = this.data.record.classLink;
+      this.chapterNo = this.data.record.className;
     }
   }
+
+  // ngOnInit(){
+  //   if(this.type == 2){
+
+  //   }
+  // }
 
   test(){
     console.log(this.teachers);
