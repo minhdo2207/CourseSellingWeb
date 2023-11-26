@@ -29,7 +29,7 @@ export class ReportComponent {
   to_date: any;
 
   topic = [
-    {id: 1, title: 'Báo cáo học viên'},
+    {id: 1, title: 'Báo cáo doanh thu'},
     {id: 2, title: 'Báo cáo doanh thu'},
     {id: 3, title: 'Báo cáo đăng ký khóa học'}
   ]
@@ -56,6 +56,7 @@ export class ReportComponent {
   cntRevenue = 0; 
 
   typeCourse = '';
+  status = '';
 
   ngOnInit() {
     this.getFullData();
@@ -73,7 +74,7 @@ export class ReportComponent {
   }
 
   getAllData(){
-    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch, startDate: this.from_date, endDate: this.to_date, type: this.typeCourse};
+    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch, startDate: this.from_date, endDate: this.to_date, type: this.typeCourse, status: this.status};
     switch(this.topicId){
       case 1:{
         option = Object.assign({size: 10}, option);
@@ -235,7 +236,14 @@ export class ReportComponent {
   }
 
   changeTypeCourse(type: any){
+    this.page = 1;
     this.typeCourse = type;
+    this.getAllData();
+  }
+
+  changeTypeStatus(id: any){
+    this.page = 1;
+    this.status = id;
     this.getAllData();
   }
 }

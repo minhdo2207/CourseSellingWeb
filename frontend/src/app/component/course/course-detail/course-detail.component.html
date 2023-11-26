@@ -29,7 +29,7 @@
         </div>
 
         <div class="out-line-title">
-            <div class="title-content">Danh Sách Khoá Học</div>
+            <div class="title-content">{{courseData.courseType == 1 ? 'Danh sách Khóa học' : 'Danh sách Lớp học'}}</div>
             <div class="action-btn">
                 <button class="btn btn-add-chapter" (click)="openModal('Thêm mới chương')" *ngIf="courseData.courseType == 1">
                     Thêm chương
