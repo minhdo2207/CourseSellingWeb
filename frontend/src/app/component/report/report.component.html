@@ -6,12 +6,40 @@
     <div class="out-line-title">
       <div class="title">{{ topic[topicId - 1].title }}</div>
       <div class="action-btn">
+        <div class="data-time" *ngIf="topicId != 1">
+          <div style="margin-right: 5px;">
+            <label for="">Từ ngày</label>
+            <br>
+            <input type="date" [(ngModel)]="from_date">
+          </div>
+          <div style="margin-right: 15px;">
+            <label for="">Đến ngày</label>
+            <br>
+            <input type="date" [(ngModel)]="to_date">
+          </div>
+        </div>
+
         <select (change)="changeTopicId($event)" name="province" id="option" style="margin-right: 20px;">
           <option value="1">Danh sách học viên</option>
           <option value="2">Danh sách khóa học</option>
           <option value="3">Danh sách đăng kí khóa học</option>
         </select>
-        <!-- <button class="btn-filter" (click)="onSearch()">Lọc kết quả</button> -->
+        <button *ngIf="topicId != 1" class="btn-filter" (click)="onSearch()">Lọc kết quả</button>
+      </div>
+    </div>
+
+    <div class="tab" *ngIf="topicId == 2">
+      <div class="tab-item" (click)="changeTypeCourse('')">
+        <div class="square" style="background-color: red;"></div>
+        <p>Tất cả</p>
+      </div>
+      <div class="tab-item" (click)="changeTypeCourse('1')">
+        <div class="square" style="background-color: yellow;"></div>
+        <p>Khóa học video</p>
+      </div>
+      <div class="tab-item" (click)="changeTypeCourse('2')">
+        <div class="square" style="background-color: green;"></div>
+        <p>Khóa học zoom</p>
       </div>
     </div>
 
@@ -21,7 +49,7 @@
             <th class="text-left" style="width: 180px;">Họ và Tên</th>
             <th class="text-left" style="width: 250px;">Email</th>
             <th class="text-left" style="width: 200px;">Số điện thoại</th>
-            <th class="text-center" style="width: 100px;">Số khoá học đã đăng ký</th>
+            <th class="text-center" style="width: 200px;">Số khoá học đã đăng ký</th>
             <th class="text-center" style="width: 100px;">Học phí đã thu</th>
           </tr>
         </thead> 
@@ -30,7 +58,7 @@
             <td class="text-left" style="width: 180px;">{{ student.userName }}</td>
             <td class="text-left"  style="width: 250px;"> {{ student.userEmail }}</td>
             <td class="text-left"  style="width: 200px;"> {{ student.userPhone }}</td>
-            <td class="text-center"  style="width: 100px;"> {{ student.totalCourse }}</td>
+            <td class="text-center"  style="width: 200px;"> {{ student.totalCourse }}</td>
             <td class="text-center"  style="width: 100px;"> {{ student.totalPay }}</td>
           </tr>
         </tbody>
@@ -55,8 +83,8 @@
             <th class="text-left" style="width: 180px;">Khóa học</th>
             <th class="text-left" style="width: 250px;">Loại</th>
             <th class="text-left" style="width: 200px;">Lớp</th>
-            <th class="text-center" style="width: 100px;">Số học sinh</th>
-            <th class="text-center" style="width: 100px;">Học phí đã thu</th>
+            <th class="text-center" style="width: 150px;">Số học sinh</th>
+            <th class="text-center" style="width: 200px;">Học phí đã thu</th>
           </tr>
         </thead> 
         <tbody >
@@ -64,8 +92,8 @@
             <td class="text-left" style="width: 180px;">{{ item.courseTitle }}</td>
             <td class="text-left"  style="width: 250px;"> {{ item.courseType == 1 ? 'Khóa video' : 'Khóa meeting' }}</td>
             <td class="text-left"  style="width: 200px;"> {{ item.courseGrade }}</td>
-            <td class="text-center"  style="width: 100px;"> {{ item.totalStudents }}</td>
-            <td class="text-center"  style="width: 100px;"> {{ item.totalMoney }} VND</td>
+            <td class="text-center"  style="width: 150px;"> {{ item.totalStudents }}</td>
+            <td class="text-center"  style="width: 200px;"> {{ item.totalMoney }} VND</td>
           </tr>
         </tbody>
         <tfoot style="display: flex; justify-content: space-between;">
@@ -89,7 +117,7 @@
             <th class="text-left" style="width: 180px;">Họ và Tên</th>
             <th class="text-left" style="width: 250px;">Khóa học</th>
             <th class="text-left" style="width: 200px;">Ngày đăng ký</th>
-            <th class="text-center" style="width: 100px;">Trạng thái</th>
+            <th class="text-center" style="width: 200px;">Trạng thái</th>
           </tr>
         </thead> 
         <tbody >
@@ -97,7 +125,7 @@
             <td class="text-left" style="width: 180px;">{{ item.userName }}</td>
             <td class="text-left"  style="width: 250px;"> {{ item.courseName }}</td>
             <td class="text-left"  style="width: 200px;"> {{ item.showTime }}</td>
-            <td class="text-center"  style="width: 100px;"> {{ item.showStatus }}</td>
+            <td class="text-center"  style="width: 200px;"> {{ item.showStatus }}</td>
           </tr>
         </tbody>
         <tfoot style="display: flex; justify-content: space-between;">

@@ -25,14 +25,19 @@ export class ReportComponent {
 
   option = 'option1';
 
+  from_date: any;
+  to_date: any;
+
   topic = [
     {id: 1, title: 'Báo cáo học viên'},
-    {id: 2, title: 'Báo cáo khóa học'},
+    {id: 2, title: 'Báo cáo doanh thu'},
     {id: 3, title: 'Báo cáo đăng ký khóa học'}
   ]
   topicId = 1;
 
   changeTopicId(e: any){
+    this.from_date = ''
+    this.to_date = '';
     this.topicId = Number(e.target.value);
     this.getAllData();
     this.getFullData();
@@ -50,6 +55,8 @@ export class ReportComponent {
   cntCourse = 0;
   cntRevenue = 0; 
 
+  typeCourse = '';
+
   ngOnInit() {
     this.getFullData();
     this.getAllData();
@@ -66,7 +73,7 @@ export class ReportComponent {
   }
 
   getAllData(){
-    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch};
+    let option = {sortDir: 'desc', page: this.page, userName: this.keySearch, startDate: this.from_date, endDate: this.to_date, type: this.typeCourse};
     switch(this.topicId){
       case 1:{
         option = Object.assign({size: 10}, option);
@@ -129,7 +136,7 @@ export class ReportComponent {
         await this.reportSrv.class(option, (res: any) => {
           if(res){
             this.fullData = res.elements;
-            this.paging = res.paging;
+            // this.paging = res.paging;
             this.fullData.forEach(item => {
               if(item.status == 1) item.showStatus = 'Đã Tham Gia';
               if(item.status == 2) item.showStatus = 'Đã Hủy';
@@ -166,6 +173,8 @@ export class ReportComponent {
   }
 
   onSearch(){
+    if(!this.from_date) this.from_date = '';
+    if(!this.to_date) this.to_date = '';
     this.keySearch = this.name;
     this.getAllData();
   }
@@ -197,7 +206,36 @@ export class ReportComponent {
   }
 
   exportFile() {
-    this.excelService.exportToExcel(this.fullData, 'Báo cáo', 'Sheet1');
+    let dataFile: any;
+    if (this.topicId == 1) dataFile = this.fullData
+
+    if (this.topicId == 2) {
+      dataFile = this.fullData.map(data => {
+        let item = data
+        item.courseType = data.courseType == 1 ? 'Khóa video' : 'Khóa meeting'
+        return item
+      })
+    }
+
+    if (this.topicId == 3) {
+      dataFile = this.fullData.map(data => {
+        let item = data
+
+        if (data.status == 1) item.showStatus = 'Đã Tham Gia';
+        if (data.status == 2) item.showStatus = 'Đã Hủy';
+        if (data.status == 0) item.showStatus = 'Đang Chờ Lớp';
+
+        item.showTime = this.datePipe.transform(item.created, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+        delete item.created;
+        delete item.status;
+        return item;
+      })
+    } 
+    this.excelService.exportToExcel(dataFile, 'Báo cáo', 'Sheet');
   }
 
+  changeTypeCourse(type: any){
+    this.typeCourse = type;
+    this.getAllData();
+  }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/service/alert.service';
+import { ModalService } from 'src/app/service/modal.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -17,11 +18,13 @@ export class TeacherComponent {
   page = 1;
   name: string = '';
   keySearch: string = '';
+  status = '';
 
   constructor(
     private alertSrv: AlertService,
     private userSrv: UserService,
-    private router: Router
+    private router: Router,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -29,8 +32,8 @@ export class TeacherComponent {
   }
 
   getAllData() {
-    let option = { roleId: 2, sortDir: 'desc', page: this.page, userName: this.keySearch };
-    this.userSrv.getAll(option, (res: any) => {
+    let option = { roleId: 2, sortDir: 'desc', page: this.page, userName: this.keySearch, status: Number(this.status) };
+    this.userSrv.getAllTeacher(option, (res: any) => {
       this.teachers = res.elements;
       this.paging = res.paging;
     })
@@ -76,7 +79,7 @@ export class TeacherComponent {
       };
     } else {
       this.modalData = {
-        title: 'Thêm khoá giáo viên mới',
+        title: 'Thêm giáo viên mới',
         type: 'CREATE'
       };
     }
@@ -102,5 +105,29 @@ export class TeacherComponent {
         }
       },
     )
+  }
+
+  showContact(info: string) {
+    this.modalService.updateStatusModal(true, info);
+  }
+  
+  changeStatusTeacher(e: any){
+    switch(e.target.value){
+      case 'all':{
+        this.status = '';
+        this.getAllData();
+        break;
+      };
+      case '1':{
+        this.status = '1';
+        this.getAllData();
+        break;
+      };
+      case '0':{
+        this.status = '0';
+        this.getAllData();
+        break;
+      }
+    }
   }
 }

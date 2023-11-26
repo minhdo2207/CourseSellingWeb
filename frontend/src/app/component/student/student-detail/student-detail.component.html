@@ -42,7 +42,7 @@
         <tbody >
           <tr *ngFor="let item of transactionResponseVOS" class="row">
             <td class="text-left" style="width: 20%;">{{ item.transactionId }}</td>
-            <td class="text-left"  style="width: 20%;"> {{ item.transactionDate }}</td>
+            <td class="text-left"  style="width: 20%;"> {{ item?.transactionDateShow }}</td>
             <td class="text-left"  style="width: 20%;"> {{ item.transactionValue }}</td>
             <td class="text-left"  style="width: 20%;"> {{ convertStatus(item.status) }}</td>
           </tr>

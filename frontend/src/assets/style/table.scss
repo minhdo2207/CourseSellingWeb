@@ -57,12 +57,12 @@ tbody {
 
 td {
     padding: 20px;
-    display: flex;
     color: #5E638E;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    word-wrap: break-word;
 }
 
 .contact {
@@ -154,4 +154,9 @@ td {
     border: none;
     outline: none;
     cursor: pointer;
+}
+
+.img-btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
 }

@@ -40,8 +40,8 @@
             <td class="text-left" style="width: 160px;">{{ student.userName }}</td>
             <td class="text-left"  style="width: 200px;"> {{ student.userAddress }}</td>
             <td class="text-center contact"  style="width: 80px; ;">
-                 <img src="../../../assets/image/icon-phone.svg">
-                 <img src="../../../assets/image/icon-mail.svg">
+                 <img class="img-btn" src="../../../assets/image/icon-phone.svg" style="margin-right: 10px;" (click)="showContact(student.userPhone)">
+                 <img class="img-btn" src="../../../assets/image/icon-mail.svg" (click)="showContact(student.userEmail)">
             </td>
             <td class="text-center"  style="width: 180px; justify-content: center">
                 <button class="btn-detail" (click)="onDetail(student.userId)">Chi tiết</button>
