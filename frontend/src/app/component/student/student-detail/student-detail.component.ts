@@ -63,6 +63,6 @@ export class StudentDetailComponent {
         this.alertSrv.showSuccess('Thay đổi trạng thái thành công', 'Thành công!');
         this.getAllData();
       }
-    }, {status: e.target.value})
+    }, {status: Number(e.target.value)})
   }
 }
