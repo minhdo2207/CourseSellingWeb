@@ -63,4 +63,21 @@ export class ClassService {
       }
     )
   }
+
+  getDetail(option: any, callBack: Function): any{
+    this.http.get(baseUrl + `admin/class/${option}`, { observe: 'response', headers: this.headers }).subscribe(
+      (response) => {
+        if (response.body) {
+          callBack(response.body);
+        }
+      },
+      (error) => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
 }

@@ -85,6 +85,12 @@ export class CourseDetailComponent {
     this.router.navigate(['/course/detail/setup-lesson', id], { queryParams: { type: this.courseData.courseType } });
   }
 
+  onDetailClass(id: any) {
+    console.log(id);
+    
+    this.router.navigate(['/course/detail/class/', id]);
+  }
+
   deleteChapter(chapterId: any){
     this.chapterSrv.delete(chapterId, (res: any) => {
       if(res){

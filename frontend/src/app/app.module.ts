@@ -32,6 +32,7 @@ import { PieComponent } from './component/report/pie/pie.component';
 import { CourseDetailLessonDetailFormDocumentComponent } from './component/course/course-detail/course-detail-lesson/course-detail-lesson-detail/course-detail-lesson-detail-form-document/course-detail-lesson-detail-form-document.component';
 import { ModalComponent } from './share-ui/modal/modal.component';
 import { LessonFormComponent } from './component/course/course-detail/lesson-form/lesson-form.component';
+import { ClassDetailComponent } from './component/course/course-detail/class-detail/class-detail.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { LessonFormComponent } from './component/course/course-detail/lesson-for
     PieComponent,
     CourseDetailLessonDetailFormDocumentComponent,
     ModalComponent,
-    LessonFormComponent
+    LessonFormComponent,
+    ClassDetailComponent
   ],
   imports: [
     BrowserModule,

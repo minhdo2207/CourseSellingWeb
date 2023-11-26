@@ -70,22 +70,23 @@
             <table class="table-custom">
                 <thead>
                     <tr class="row">
-                        <th class="text-left" style="width: 100px;">Số thứ tự</th>
-                        <th class="text-left" style="width: 150px;">Giáo viên</th>
-                        <th class="text-left" style="width: 150px;">Lớp học</th>
-                        <th class="text-left" style="width: 150px;">Số học sinh</th>
-                        <th class="text-left" style="width: 150px;">Trạng thái</th>
-                        <th class="text-left" style="width: 150px;">Hành động</th>
+                        <th class="text-center" style="width: 100px;">Số thứ tự</th>
+                        <th class="text-left" style="width: 120px;">Giáo viên</th>
+                        <th class="text-left" style="width: 120px;">Lớp học</th>
+                        <th class="text-center" style="width: 120px;">Số học sinh</th>
+                        <th class="text-left" style="width: 120px;">Trạng thái</th>
+                        <th class="text-center" style="width: 350px;">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of courseData.classVos; let index = index" class="row">
-                        <td class="text-left" style="width: 100px;">{{ index+1 }}</td>
-                        <td class="text-left" style="width: 150px;"> {{ item.tutorName }}</td>
-                        <td class="text-left" style="width: 150px;"> {{ item.className }}</td>
-                        <td class="text-left" style="width: 150px;"> {{ item.totalStudents }}</td>
-                        <td class="text-left" style="width: 150px;"> {{ convertStatus(item.totalStudents) }}</td>
-                        <td class="text-center" style="width: 150px; justify-content: center">
+                        <td class="text-center" style="width: 100px;">{{ index+1 }}</td>
+                        <td class="text-left" style="width: 120px;"> {{ item.tutorName }}</td>
+                        <td class="text-left" style="width: 120px;"> {{ item.className }}</td>
+                        <td class="text-center" style="width: 120px;"> {{ item.totalStudents }}</td>
+                        <td class="text-left" style="width: 120px;"> {{ convertStatus(item.totalStudents) }}</td>
+                        <td class="text-center" style="width: 350px; display: flex; justify-content: center">
+                            <button class="btn-edit"  (click)="onDetailClass(item.classId)" style="background-color: #98ffb9;">Chi tiết</button> 
                             <button class="btn-edit"  (click)="openModal(item)">Chỉnh sửa</button> 
                             <button class=" btn-remove" (click)="deleteClass(item.classId)">Xoá lớp</button>
                         </td>
