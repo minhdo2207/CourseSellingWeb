@@ -175,8 +175,10 @@ public class UserServiceImpl implements UserService {
                 pageable -> userRepository.findTutorByUserName(findTeacherRequestVo, pageable),
                 data -> {
                     List<TutorDetailResponseVO> tutorDetailResponseVOS = mapper.mapAsList(data, TutorDetailResponseVO.class);
-                    tutorDetailResponseVOS.forEach(tutorDetailResponseVO ->
-                            tutorDetailResponseVO.setTeachingStatus(findTeacherRequestVo.getStatus()));
+                    tutorDetailResponseVOS.forEach(tutorDetailResponseVO -> tutorDetailResponseVO.setTeachingStatus(findTeacherRequestVo.getStatus() == null ? (tutorDetailResponseVO.getTutor().getZoomClasses().size() > 0 ? 1L :
+                            0L) : findTeacherRequestVo.getStatus()));
+
+
                     return tutorDetailResponseVOS;
                 });
         return result;
