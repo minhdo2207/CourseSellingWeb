@@ -10,9 +10,7 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./student-detail.component.scss']
 })
 export class StudentDetailComponent {
-  transactionResponseVOS = [
-    { transactionId: 1, courses: '', transactionDateShow: '', transactionValue: '', status: '' },
-  ];
+  transactionResponseVOS: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -57,8 +55,8 @@ export class StudentDetailComponent {
     return 'Thất Bại ';
   }
 
-  changeStatus(e: any){
-    this.userService.changeStatus(this.userId, (res: any) => {
+  changeStatus(e: any, transactionId: any){
+    this.userService.changeStatus(transactionId, (res: any) => {
       if(res){
         this.alertSrv.showSuccess('Thay đổi trạng thái thành công', 'Thành công!');
         this.getAllData();
