@@ -21,6 +21,10 @@ export class CourseComponent {
     this.getAllData();
   }
 
+  formatCurrency(value: number): string {
+    return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  }
+
   getAllData(){
     let option = {sortDir: 'desc', page: this.page, type: this.type, name: this.keySearch};
     this.courseSrv.getAll(option, (res: any) => {
