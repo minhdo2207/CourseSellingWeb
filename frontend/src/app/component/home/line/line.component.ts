@@ -52,8 +52,8 @@ export class LineComponent {
         curve: "straight"
       },
       title: {
-        text: "Biểu đồ doanh thut",
-        align: "center"
+        text: "Biểu đồ doanh thu",
+        align: "center",
       },
       grid: {
         row: {

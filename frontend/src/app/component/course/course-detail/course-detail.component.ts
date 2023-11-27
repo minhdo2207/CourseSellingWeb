@@ -36,9 +36,9 @@ export class CourseDetailComponent {
   getAllData(){
     this.courseSrv.getDetail(this.courseId, (res: any) => {
       this.courseData = res;
-      this.courseData.timeStart = this.datePipe.transform(this.courseData.courseStart.created, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
-      this.courseData.timeEnd = this.datePipe.transform(this.courseData.courseEnd.created, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
-      // console.log(this.courseData);
+      this.courseData.timeStart = this.datePipe.transform(this.courseData.courseStart, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+      this.courseData.timeEnd = this.datePipe.transform(this.courseData.courseEnd, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
+      console.log(this.courseData);
     })
   }
 
@@ -47,15 +47,31 @@ export class CourseDetailComponent {
   isModalOpen2 = false;
   modalData: any;
 
-  openModal() {
+  openModal(title: string, record?: any) {
+    if (record) {
+      this.modalData = {
+        record: record,
+        type: this.courseData.courseType,
+        title: title,
+        typeForm: 'UPDATE'
+      };
+    } else {
+      this.modalData = {
+        title: title,
+        type: this.courseData.courseType,
+        typeForm: 'CREATE'
+      };
+    }
+
     this.isModalOpen = true;
-    this.modalData = { type: this.courseData.courseType };
   }
+
 
   openModal2(){
     this.isModalOpen2 = true;
     this.modalData = { /* Your data here */ };
   }
+  
   onCloseModal() {
     this.isModalOpen = false;
     this.getAllData();
@@ -68,6 +84,12 @@ export class CourseDetailComponent {
 
   onSetupLesson(id: any) {
     this.router.navigate(['/course/detail/setup-lesson', id], { queryParams: { type: this.courseData.courseType } });
+  }
+
+  onDetailClass(id: any) {
+    console.log(id);
+    
+    this.router.navigate(['/course/detail/class/', id]);
   }
 
   deleteChapter(chapterId: any){
@@ -86,5 +108,13 @@ export class CourseDetailComponent {
         this.getAllData();
       }
     }, id)
+  }
+
+  convertStatus(numberStudent: any): string {
+    if (30 > numberStudent) {
+      return `Còn ${30 -numberStudent} chỗ`
+    } else {
+      return 'Đã hết chỗ'
+    }
   }
 }

@@ -36,13 +36,13 @@ public class ZoomClass extends BaseEnt implements Serializable {
     @JoinColumn(name = "tutor_id", nullable = false)
     private Tutor tutor;
 
-    @Column(name = "class_name", nullable = false)
+    @Column(name = "class_name", nullable = false,length = 100)
     private String className;
 
-    @Column(name = "class_link", nullable = false)
+    @Column(name = "class_link", nullable = false,length = 255)
     private String classLink;
 
-    @Column(name = "total_students", columnDefinition = "BIGING DEFAULT 0")
+    @Column(name = "total_students", columnDefinition = "BIGINT DEFAULT 0")
     @Max(value = 50, message = "Total students cannot exceed 50")
     private Long totalStudents;
 

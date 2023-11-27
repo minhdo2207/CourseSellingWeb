@@ -46,8 +46,8 @@ public class DocumentServiceImpl implements DocumentService {
             throw new InvalidInputRequestException("msg_error_question_already_exists");
         }
         Document document = documentOptional.get();
-        document.setDocumentTitle(document.getDocumentTitle());
-        document.setDocumentLink(document.getDocumentLink());
+        document.setDocumentTitle(documentRequestVO.getDocumentTitle());
+        document.setDocumentLink(documentRequestVO.getDocumentLink());
         documentRepository.save(document);
         return mapper.map(document, DocumentResponseVO.class);
     }

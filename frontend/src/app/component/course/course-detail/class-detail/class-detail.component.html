@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="title">
+        Chi tiết lớp học
+    </div>
+
+    <div class="out-line-content">
+        <div class="title-content">Miêu tả lớp học</div>
+
+        <div class="content">
+            Tên lớp học: {{classs.className}}
+        </div>
+
+        <div class="content">
+            Tên giáo viên: {{classs.tutorName}}
+        </div>
+
+        <div class="content">
+            Link khóa học: {{classs.classLink}}
+        </div>
+        <div class="content">
+            Tổng số học sinh: {{classs.totalStudents}}
+        </div>
+
+        <div class="out-line-title">
+            <div class="title-content">Danh sách học sinh</div>
+        </div>
+
+        <table class="table-custom">
+            <thead>
+                <tr class="row">
+                    <th class="text-center" style="width: 200px;">Tên học sinh</th>
+                    <th class="text-center" style="width: 150px;">Số điện thoại</th>
+                    <th class="text-center" style="width: 350px;">Địa chỉ</th>
+                    <th class="text-center" style="width: 350px;">Gmail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of classs.students; let index = index" class="row">
+                    <td class="text-center" style="width: 200px;">{{item.userName}}</td>
+                    <td class="text-center" style="width: 150px;">{{item.userPhone}}</td>
+                    <td class="text-center" style="width: 350px;">{{item.userAddress}}</td>
+                    <td class="text-center" style="width: 350px;">{{item.userEmail}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

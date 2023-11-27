@@ -7,8 +7,9 @@ import * as XLSX from 'xlsx';
 export class ExcelService {
   constructor() {}
 
-  exportToExcel(data: any[], fileName: string, sheetName: string): void {
+  exportToExcel(data: any[], fileName: string, sheetName: string, dataHeader?: Array<string>): void {
     const headers = Object.keys(data[0]);
+
     const values = data.map((obj) => headers.map((key) => obj[key]));
 
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([headers, ...values]);

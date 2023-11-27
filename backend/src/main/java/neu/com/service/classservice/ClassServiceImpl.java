@@ -126,6 +126,7 @@ public class ClassServiceImpl implements ClassService {
                 .collect(Collectors.toList());
 
         classDetailResponseVO.setStudents(students);
+        classDetailResponseVO.setTotalStudents(students == null ? 0L : students.size());
 
         return classDetailResponseVO;
     }

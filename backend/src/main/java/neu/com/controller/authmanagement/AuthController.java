@@ -9,6 +9,7 @@ import neu.com.repository.UserRepository;
 import neu.com.utils.Constants;
 import neu.com.utils.Translator;
 import neu.com.utils.common.ResponseUtil;
+import neu.com.utils.common.StringUtils;
 import neu.com.vo.request.LoginRequest;
 import neu.com.vo.response.CommonResponse;
 import neu.com.vo.response.JwtResponseVO;
@@ -20,7 +21,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +50,11 @@ public class AuthController {
         CommonResponse<JwtResponseVO> result = new CommonResponse<>();
 
         try {
-            if (loginRequest.getUsername().isBlank()) {
+            if (StringUtils.isEmpty(loginRequest.getUsername())) {
                 result.setMessage(Translator.toLocale("msg_login_username_missing"));
                 return ResponseUtil.setResponseData(result.getStatusCode(), result.getData(), result.getMessage());
             }
-            if (loginRequest.getPassword().isBlank()) {
+            if (StringUtils.isEmpty(loginRequest.getPassword())) {
                 result.setMessage(Translator.toLocale("msg_login_pwd_missing"));
                 return ResponseUtil.setResponseData(result.getStatusCode(), result.getData(), result.getMessage());
             }

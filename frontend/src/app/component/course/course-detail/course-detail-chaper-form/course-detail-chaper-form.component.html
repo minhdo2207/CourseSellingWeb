@@ -2,7 +2,7 @@
 <div class="overlay" *ngIf="isOpen">
     <div class="modal">
         <div *ngIf="type == 1">
-            <div class="title-form">Thêm chương</div>
+            <div class="title-form">{{data.title}}</div>
             <form (ngSubmit)="onSubmit()" class="my-form">
                 <div class="out-line-ip">
                     <label for="courseName" class="label-ip">Số thứ tự</label>
@@ -15,14 +15,14 @@
                 </div>
 
                 <div class="action-btn">
-                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <div (click)="onCloseModal()" class="btn btn-close">Đóng</div>
                     <button type="submit" class="btn btn-add">Xác nhận</button>
                 </div>
             </form>
         </div>
 
         <div *ngIf="type == 2">
-            <div class="title-form" (click)="test()">Thêm mới lớp học</div>
+            <div class="title-form" (click)="test()">{{data.title}}</div>
             <form (ngSubmit)="onSubmit()" class="my-form">
                 <div class="out-line-ip">
                     <label for="courseName" class="label-ip">Tên lớp học</label>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="action-btn">
-                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <div (click)="onCloseModal()" class="btn btn-close">Đóng</div>
                     <button type="submit" class="btn btn-add">Xác nhận</button>
                 </div>
             </form>

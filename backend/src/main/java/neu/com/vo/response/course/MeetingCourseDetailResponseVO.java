@@ -1,13 +1,8 @@
 package neu.com.vo.response.course;
 
-import jakarta.persistence.EntityListeners;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import neu.com.vo.response.ChapterResponseVO;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import neu.com.vo.response.ClassDetailResponseVO;
 
 import java.util.List;
 
@@ -15,5 +10,6 @@ import java.util.List;
 @SuperBuilder
 public class MeetingCourseDetailResponseVO extends CourseDetailResponseVO{
     //Add Classes
-    private List<ClassResponseVO> classVos;
+    private List<ClassDetailResponseVO> classVos;
+    private List<UserResponseVO> waitingStudents;
 }

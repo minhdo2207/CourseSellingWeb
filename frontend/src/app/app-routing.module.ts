@@ -10,6 +10,7 @@ import { CourseDetailLessonComponent } from './component/course/course-detail/co
 import { CourseDetailLessonDetailComponent } from './component/course/course-detail/course-detail-lesson/course-detail-lesson-detail/course-detail-lesson-detail.component';
 import { StudentDetailComponent } from './component/student/student-detail/student-detail.component';
 import { TeacherDetailComponent } from './component/teacher/teacher-detail/teacher-detail.component';
+import { ClassDetailComponent } from './component/course/course-detail/class-detail/class-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'teacher/detail/:id', component: TeacherDetailComponent },
   { path: 'course/list', component: CourseComponent },
   { path: 'course/detail/:id', component: CourseDetailComponent },
+  { path: 'course/detail/class/:id', component: ClassDetailComponent },
   { path: 'course/detail/setup-lesson/:id', component: CourseDetailLessonComponent },
   { path: 'course/detail/setup-lesson/detail/:id', component: CourseDetailLessonDetailComponent },
   { path: 'report/list', component: ReportComponent },

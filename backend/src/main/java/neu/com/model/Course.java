@@ -34,10 +34,10 @@ public class Course extends BaseEnt implements Serializable {
     @Column(name = "course_id")
     private Long courseId;
 
-    @Column(name = "course_title", nullable = false)
+    @Column(name = "course_title", nullable = false,length = 100)
     private String courseTitle;
 
-    @Column(name = "course_subtitle")
+    @Column(name = "course_subtitle",length = 500)
     private String courseSubtitle;
 
     @Column(name = "course_description_text")

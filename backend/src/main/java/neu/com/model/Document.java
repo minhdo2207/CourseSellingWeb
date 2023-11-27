@@ -36,13 +36,13 @@ public class Document extends BaseEnt implements Serializable {
     @JsonIgnore
     private Lesson lesson;
 
-    @Column(name = "document_title", nullable = false)
+    @Column(name = "document_title", nullable = false,length = 100)
     private String documentTitle;
 
     @Column(name = "document_image", length = 255, columnDefinition = "VARCHAR(255) DEFAULT 'default'")
     private String documentImage;
 
-    @Column(name = "document_link", nullable = false)
+    @Column(name = "document_link", nullable = false,length = 255)
     private String documentLink;
 
 

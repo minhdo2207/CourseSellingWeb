@@ -2,28 +2,22 @@ package neu.com.service.user;
 
 import com.naharoo.commons.mapstruct.MappingFacade;
 import neu.com.configuration.exception.InvalidInputRequestException;
-import neu.com.model.Role;
-import neu.com.model.Transaction;
-import neu.com.model.Tutor;
-import neu.com.model.User;
-import neu.com.repository.RoleRepository;
-import neu.com.repository.TutorRepository;
-import neu.com.repository.UserRepository;
+import neu.com.model.*;
+import neu.com.repository.*;
 import neu.com.utils.Constants;
 import neu.com.utils.common.ResponseUtil;
 import neu.com.vo.request.SortingAndPagingRequestVO;
 import neu.com.vo.request.course.FindTeacherRequestVo;
 import neu.com.vo.request.course.FindUserRequestVo;
 import neu.com.vo.request.course.UserCreateRequestVO;
+import neu.com.vo.request.course.UserRequestVO;
 import neu.com.vo.response.PagedResult;
 import neu.com.vo.response.course.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,6 +30,17 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     @Autowired
     private MappingFacade mapper;
+    @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
+
+    @Autowired
+    private ZoomEnrollmentRepository zoomEnrollmentRepository;
+
+    @Autowired
+    private ClassRepository classRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -59,7 +64,9 @@ public class UserServiceImpl implements UserService {
         if (user.getRoles().stream().anyMatch(role -> role.getRoleId().equals(1L))) {
             //Student
             StudentDetailResponseVO studentDetailResponseVO = mapper.map(user, StudentDetailResponseVO.class);
-            studentDetailResponseVO.setTransactionResponseVOS(mapper.mapAsList(user.getTransactions(), TransactionResponseVO.class));
+            List<TransactionResponseVO> transactionResponseVOs = mapper.mapAsList(user.getTransactions(), TransactionResponseVO.class);
+            transactionResponseVOs.forEach(transactionResponseVO -> transactionResponseVO.setCourses(mapper.map(transactionRepository.findById(transactionResponseVO.getTransactionId()).get().getCourse(), CourseResponseVO.class)));
+            studentDetailResponseVO.setTransactionResponseVOS(transactionResponseVOs);
             return studentDetailResponseVO;
         } else if (user.getRoles().stream().anyMatch(role -> role.getRoleId().equals(2L))) {
             //Tutor
@@ -175,11 +182,105 @@ public class UserServiceImpl implements UserService {
                 pageable -> userRepository.findTutorByUserName(findTeacherRequestVo, pageable),
                 data -> {
                     List<TutorDetailResponseVO> tutorDetailResponseVOS = mapper.mapAsList(data, TutorDetailResponseVO.class);
-                    tutorDetailResponseVOS.forEach(tutorDetailResponseVO ->
-                            tutorDetailResponseVO.setTeachingStatus(findTeacherRequestVo.getStatus()));
+                    tutorDetailResponseVOS.forEach(tutorDetailResponseVO -> tutorDetailResponseVO.setTeachingStatus(findTeacherRequestVo.getStatus() == null ? (tutorDetailResponseVO.getTutor().getZoomClasses().size() > 0 ? 1L :
+                            0L) : findTeacherRequestVo.getStatus()));
+
+
                     return tutorDetailResponseVOS;
                 });
         return result;
     }
+
+    @Override
+    public Object deleteStudentFromClass(Long userId, Long classId) {
+        //Check if user exitst
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (!userOptional.isPresent()) {
+            throw new InvalidInputRequestException("msg_error_user_notfound");
+        }
+        Optional<ZoomClass> classOptional = classRepository.findById(classId);
+        if (!classOptional.isPresent()) {
+            throw new InvalidInputRequestException("msg_error_class_notfound");
+        }
+        List<Enrollment> enrollmentOptional = enrollmentRepository.findAllByUser(userOptional.get());
+        Enrollment enrollment = null;
+        for (Enrollment e : enrollmentOptional
+        ) {
+            if (e.getCourse().equals(classOptional.get().getCourse())) {
+                enrollment = e;
+            }
+        }
+        Optional<ZoomEnrollment> zoomEnrollmentOptional = zoomEnrollmentRepository.findByEnrollmentAndZoomClass(enrollment, classOptional.get());
+        if (!zoomEnrollmentOptional.isPresent()) {
+            throw new InvalidInputRequestException("msg_error_enrollementt_notfound");
+        }
+
+        zoomEnrollmentRepository.delete(zoomEnrollmentOptional.get());
+//        //Enrollment enrollment = enrollmentOptional.get();
+        enrollment.setStatus(0L);
+        enrollmentRepository.save(enrollment);
+
+        return mapper.map(classRepository.findById(classId).get(), ClassResponseVO.class);
+    }
+
+    @Override
+    public Object getWatingStudent(Long classId) {
+        Optional<ZoomClass> classOptional = classRepository.findById(classId);
+        if (!classOptional.isPresent()) {
+            throw new InvalidInputRequestException("msg_error_class_notfound");
+        }
+
+        Set<User> users = new HashSet<>();
+        Course course = classOptional.get().getCourse();
+        List<Enrollment> enrollmentList = enrollmentRepository.findAllByCourse(course);
+        for (Enrollment e : enrollmentList) {
+            if (e.getStatus().equals(0L)) {
+                users.add(e.getUser());
+            }
+        }
+        return mapper.mapAsList(users, UserResponseVO.class);
+    }
+
+    @Override
+    public Object addStudentFromClass(UserRequestVO userRequestVO, Long classId) {
+        Optional<User> userOptional = userRepository.findById(userRequestVO.getUserId());
+        if (!userOptional.isPresent()) {
+            throw new InvalidInputRequestException("msg_error_user_notfound");
+        }
+        Optional<ZoomClass> classOptional = classRepository.findById(classId);
+        if (!classOptional.isPresent()) {
+            throw new InvalidInputRequestException("msg_error_class_notfound");
+        }
+
+        Set<User> users = new HashSet<>();
+        Course course = classOptional.get().getCourse();
+        List<Enrollment> enrollmentList = enrollmentRepository.findAllByCourse(course);
+        for (Enrollment e : enrollmentList) {
+            if (e.getStatus().equals(0L)) {
+                users.add(e.getUser());
+            }
+        }
+        if (!users.contains(userOptional.get())) {
+            throw new InvalidInputRequestException("msg_error_user_notfound");
+        } else {
+            //Add to zoom enrollment
+            ZoomEnrollment zoomEnrollment = new ZoomEnrollment();
+            zoomEnrollment.setZoomClass(classOptional.get());
+            Enrollment enrollment = enrollmentRepository.findByUserAndCourse(userOptional.get(), course).get();
+            zoomEnrollment.setEnrollment(enrollment);
+            zoomEnrollment.setZoomEnrollmentStatus(true);
+            zoomEnrollmentRepository.save(zoomEnrollment);
+            //Set status
+            enrollment.setStatus(1L);
+            enrollmentRepository.save(enrollment);
+            //Set class
+            ZoomClass zoomClass = classOptional.get();
+            zoomClass.setClassStatus(((30 - zoomClass.getTotalStudents().intValue()) == 0) ? false : true);
+            classRepository.save(zoomClass);
+            return mapper.map(zoomClass, ClassResponseVO.class);
+        }
+    }
+
+    //TODO Add student to class
 
 }

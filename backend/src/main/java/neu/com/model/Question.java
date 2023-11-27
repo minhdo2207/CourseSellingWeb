@@ -33,16 +33,16 @@ public class Question extends BaseEnt implements Serializable {
     @JoinColumn(name = "lesson_id", nullable = false)
     private Lesson lesson;
 
-    @Column(name = "question", nullable = false)
+    @Column(name = "question", nullable = false,length = 100)
     private String question;
 
-    @Column(name = "choice_a", nullable = false)
+    @Column(name = "choice_a", nullable = false,length = 100)
     private String choiceA;
 
-    @Column(name = "choice_b", nullable = false)
+    @Column(name = "choice_b", nullable = false,length = 100)
     private String choiceB;
 
-    @Column(name = "choice_c", nullable = false)
+    @Column(name = "choice_c", nullable = false,length = 100)
     private String choiceC;
 
     @Column(name = "choice_d", nullable = false)

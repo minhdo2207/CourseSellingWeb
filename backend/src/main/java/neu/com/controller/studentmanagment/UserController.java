@@ -7,6 +7,7 @@ import neu.com.vo.request.SortingAndPagingRequestVO;
 import neu.com.vo.request.course.FindTeacherRequestVo;
 import neu.com.vo.request.course.FindUserRequestVo;
 import neu.com.vo.request.course.UserCreateRequestVO;
+import neu.com.vo.request.course.UserRequestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,5 +78,30 @@ public class UserController {
     public Object getFreeTeacher() {
         return userService.getFreeTeacher();
 
+    }
+
+    /**
+     * Delete student from class
+     */
+
+    @DeleteMapping("/class/{classId}/student/{userId}")
+    public Object deleteStudentFromClass(@PathVariable("userId") Long userId, @PathVariable("classId") Long classId) {
+        return userService.deleteStudentFromClass(userId,classId);
+    }
+
+    /**
+     * Add student from class
+     */
+    @PutMapping("/class/{classId}")
+    public Object addStudentFromClass(@Valid @RequestBody UserRequestVO userRequestVO, @PathVariable("classId") Long classId) {
+        return userService.addStudentFromClass(userRequestVO,classId);
+    }
+
+    /**
+     * Get waiting student from class
+     */
+    @GetMapping("/class/{classId}")
+    public Object getWatingStudent(@PathVariable("classId") Long classId) {
+        return userService.getWatingStudent(classId);
     }
 }

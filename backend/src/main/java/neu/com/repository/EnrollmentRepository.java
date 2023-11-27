@@ -6,8 +6,8 @@ import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 import neu.com.model.Course;
 import neu.com.model.Enrollment;
-import neu.com.model.QCourse;
 import neu.com.model.QEnrollment;
+import neu.com.model.User;
 import neu.com.utils.common.DateTimeUtils;
 import neu.com.vo.request.FindEnrollmentRequestVo;
 import org.apache.commons.lang3.ObjectUtils;
@@ -22,6 +22,7 @@ import org.springframework.data.querydsl.binding.SingleValueBinding;
 import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -46,6 +47,9 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>, Q
         if (ObjectUtils.isNotEmpty(findEnrollmentRequestVo.getEndDate())) {
             expression = expression.and(QEnrollment.enrollment.created.before(DateTimeUtils.getDateFromIsoDate(findEnrollmentRequestVo.getEndDate())));
         }
+        if (ObjectUtils.isNotEmpty(findEnrollmentRequestVo.getStatus())) {
+            expression = expression.and(QEnrollment.enrollment.status.eq(findEnrollmentRequestVo.getStatus()));
+        }
         return this.findAll(expression, pageable);
     }
 
@@ -54,4 +58,12 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>, Q
 
 
     Enrollment findByCourse(Optional<Course> courseOptional);
+
+    Optional<Enrollment> findByUserAndCourse(User user, Course course);
+
+    List<Enrollment> findAllByCourse(Course course);
+
+    Optional<Enrollment> findByUser(User user);
+
+    List<Enrollment> findAllByUser(User user);
 }

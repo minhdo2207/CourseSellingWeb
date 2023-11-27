@@ -3,22 +3,28 @@ package neu.com.service.courseservice.course;
 import com.naharoo.commons.mapstruct.MappingFacade;
 import neu.com.configuration.exception.InvalidInputRequestException;
 import neu.com.model.*;
+import neu.com.repository.ClassRepository;
 import neu.com.repository.CourseRepository;
+import neu.com.repository.EnrollmentRepository;
+import neu.com.repository.UserRepository;
+import neu.com.utils.Constants;
 import neu.com.utils.common.ResponseUtil;
 import neu.com.vo.enumData.CourseType;
 import neu.com.vo.request.SortingAndPagingRequestVO;
 import neu.com.vo.request.course.CourseCreateRequestVO;
+import neu.com.vo.request.course.CourseDateRequestVO;
 import neu.com.vo.request.course.CourseUpdateRequestVO;
 import neu.com.vo.request.course.FindCourseRequestVo;
 import neu.com.vo.response.ChapterResponseVO;
+import neu.com.vo.response.ClassDetailResponseVO;
 import neu.com.vo.response.PagedResult;
 import neu.com.vo.response.course.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.List;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +32,16 @@ public class CourseServiceImpl implements CourseService {
     private final String DEFAULT_SORT_KEY = "courseId";
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ClassRepository classRepository;
+
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
+
     @Autowired
     private MappingFacade mapper;
 
@@ -57,16 +73,31 @@ public class CourseServiceImpl implements CourseService {
             return videoCourseDetailResponseVO;
         } else if (CourseType.MEETING_COURSE.getValue().equals(course.getCourseType())) {
             MeetingCourseDetailResponseVO meetingCourseDetailResponseVO = mapper.map(course, MeetingCourseDetailResponseVO.class);
-            List<ClassResponseVO> classResponseVOS = mapper.mapAsList(course.getClasses(), ClassResponseVO.class);
+            List<ClassDetailResponseVO> classResponseVOS = mapper.mapAsList(course.getClasses(), ClassDetailResponseVO.class);
+            List<UserResponseVO> userResponseVOS = mapper.mapAsList(getWaitingStudent(course), UserResponseVO.class);
 
-            for (ClassResponseVO classResponseVO : classResponseVOS) {
+            for (ClassDetailResponseVO classResponseVO : classResponseVOS) {
                 classResponseVO.setTutorName(classResponseVO.getTutor().getUser().getUserName());
+                classResponseVO.setTotalStudents(classRepository.findById(classResponseVO.getClassId()).get().getTotalStudents());
             }
 
             meetingCourseDetailResponseVO.setClassVos(classResponseVOS);
+            meetingCourseDetailResponseVO.setWaitingStudents(userResponseVOS);
             return meetingCourseDetailResponseVO;
         }
         return null;
+    }
+
+    private List<Object> getWaitingStudent(Course course) {
+        List<Enrollment> enrollmentList = enrollmentRepository.findAllByCourse(course);
+        Set<User> users = new HashSet<>();
+        for (Enrollment enrollement : enrollmentList
+        ) {
+            if (enrollement.getStatus() == 0L) {
+                users.add(enrollement.getUser());
+            }
+        }
+        return new ArrayList<>(users);
     }
 
     @Override
@@ -126,7 +157,7 @@ public class CourseServiceImpl implements CourseService {
                 data -> {
                     List<CourseReportResponseVO> courseReportResponseVOS = mapper.mapAsList(data, CourseReportResponseVO.class);
                     courseReportResponseVOS.forEach(courseReportResponseVO -> {
-                        courseReportResponseVO.setTotalStudents(Long.valueOf(courseReportResponseVO.getEnrollments().size()));
+                        courseReportResponseVO.setTotalStudents(courseReportResponseVO.getEnrollments() == null ? 0L : Long.valueOf(courseReportResponseVO.getEnrollments().size()));
                         courseReportResponseVO.setTotalMoney(courseReportResponseVO.getTransactions().stream()
                                 .mapToLong(Transaction::getTransactionValue)
                                 .sum());
@@ -134,6 +165,27 @@ public class CourseServiceImpl implements CourseService {
                     return courseReportResponseVOS;
                 });
         return result;
+    }
+
+    @Override
+    public Object updateDateCourse(CourseDateRequestVO courseUpdateRequestVO, Long courseId) throws ParseException {
+        //Check if course exitst
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (!courseOptional.isPresent()) {
+            throw new InvalidInputRequestException("msg_error_course_notfound");
+        }
+        Course course = courseOptional.get();
+        Date startDate = new SimpleDateFormat(Constants.FORMAT_DATE_MOBILE_SSO).parse(courseUpdateRequestVO.getCourseStart());
+        Date endDate = new SimpleDateFormat(Constants.FORMAT_DATE_MOBILE_SSO).parse(courseUpdateRequestVO.getCourseEnd());
+        if (startDate.after(endDate)) {
+            throw new InvalidInputRequestException("msg_end_date_must_after_start_date");
+        }
+        course.setCourseStart(startDate);
+        course.setCourseEnd(endDate);
+        courseRepository.save(course);
+
+
+        return mapper.map(course, CourseResponseVO.class);
     }
 
 

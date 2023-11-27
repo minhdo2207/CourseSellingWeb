@@ -32,16 +32,16 @@ public class User extends BaseEnt implements Serializable {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_email", nullable = false, unique = true, length = 255)
+    @Column(name = "user_email", nullable = false, unique = true, length = 50)
     private String userEmail;
 
-    @Column(name = "user_password", nullable = true, length = 255)
+    @Column(name = "user_password", nullable = true, length = 100)
     private String userPassword;
 
-    @Column(name = "user_name", nullable = false, length = 255)
+    @Column(name = "user_name", nullable = false, length = 60)
     private String userName;
 
-    @Column(name = "user_phone", nullable = false, length = 255)
+    @Column(name = "user_phone", nullable = false, length = 10)
     private String userPhone;
 
     @Column(name = "user_dob")
