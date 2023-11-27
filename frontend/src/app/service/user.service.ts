@@ -170,4 +170,25 @@ export class UserService {
     )
   }
 
+  deleteTransaction(option: any, callBack: Function):any{
+    this.http.delete(baseUrl + `admin/transaction/${option}`, { observe: 'response', headers: this.headers}).subscribe(
+      response => {
+        if (response) {
+          let body: any = Object.assign({}, response);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
 }
