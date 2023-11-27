@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.StringPath;
 import neu.com.model.Course;
 import neu.com.model.Enrollment;
 import neu.com.model.QEnrollment;
+import neu.com.model.User;
 import neu.com.utils.common.DateTimeUtils;
 import neu.com.vo.request.FindEnrollmentRequestVo;
 import org.apache.commons.lang3.ObjectUtils;
@@ -21,6 +22,7 @@ import org.springframework.data.querydsl.binding.SingleValueBinding;
 import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -56,4 +58,12 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>, Q
 
 
     Enrollment findByCourse(Optional<Course> courseOptional);
+
+    Optional<Enrollment> findByUserAndCourse(User user, Course course);
+
+    List<Enrollment> findAllByCourse(Course course);
+
+    Optional<Enrollment> findByUser(User user);
+
+    List<Enrollment> findAllByUser(User user);
 }

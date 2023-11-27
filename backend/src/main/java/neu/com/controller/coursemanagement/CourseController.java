@@ -5,10 +5,13 @@ import neu.com.service.courseservice.course.CourseService;
 import neu.com.utils.Constants;
 import neu.com.vo.request.SortingAndPagingRequestVO;
 import neu.com.vo.request.course.CourseCreateRequestVO;
+import neu.com.vo.request.course.CourseDateRequestVO;
 import neu.com.vo.request.course.CourseUpdateRequestVO;
 import neu.com.vo.request.course.FindCourseRequestVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
 
 @RestController
 @RequestMapping(Constants.API_VERSION + "/admin/course")
@@ -42,6 +45,11 @@ public class CourseController {
     @PutMapping("/{courseId}")
     public Object updateCourse(@Valid @RequestBody CourseUpdateRequestVO courseUpdateRequestVO, @PathVariable("courseId") Long courseId) {
         return courseService.updateCourse(courseUpdateRequestVO, courseId);
+    }
+
+    @PutMapping("/date/{courseId}")
+    public Object updateDateCourse(@Valid @RequestBody CourseDateRequestVO courseUpdateRequestVO, @PathVariable("courseId") Long courseId) throws ParseException {
+        return courseService.updateDateCourse(courseUpdateRequestVO, courseId);
     }
 
 
