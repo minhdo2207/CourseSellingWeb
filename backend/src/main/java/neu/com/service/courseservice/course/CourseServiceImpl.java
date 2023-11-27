@@ -3,6 +3,7 @@ package neu.com.service.courseservice.course;
 import com.naharoo.commons.mapstruct.MappingFacade;
 import neu.com.configuration.exception.InvalidInputRequestException;
 import neu.com.model.*;
+import neu.com.repository.ClassRepository;
 import neu.com.repository.CourseRepository;
 import neu.com.repository.EnrollmentRepository;
 import neu.com.repository.UserRepository;
@@ -34,6 +35,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ClassRepository classRepository;
 
     @Autowired
     private EnrollmentRepository enrollmentRepository;
@@ -74,7 +78,7 @@ public class CourseServiceImpl implements CourseService {
 
             for (ClassDetailResponseVO classResponseVO : classResponseVOS) {
                 classResponseVO.setTutorName(classResponseVO.getTutor().getUser().getUserName());
-                classResponseVO.setTotalStudents(classResponseVO.getStudents() == null ? 0L : Long.valueOf(classResponseVO.getStudents().size()));
+                classResponseVO.setTotalStudents(classRepository.findById(classResponseVO.getClassId()).get().getTotalStudents());
             }
 
             meetingCourseDetailResponseVO.setClassVos(classResponseVOS);
