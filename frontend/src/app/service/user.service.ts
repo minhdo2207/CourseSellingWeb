@@ -191,4 +191,23 @@ export class UserService {
     )
   }
 
+  getAllAll(option: any, callBack: Function): any {
+    let param = {};
+    param = Object.assign({}, option);
+
+    this.http.get(baseUrl + 'admin/user', { observe: 'response', params: param, headers: this.headers }).subscribe(
+      (response) => {
+        if (response.body) {
+          callBack(response.body);
+        }
+      },
+      (error) => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
 }

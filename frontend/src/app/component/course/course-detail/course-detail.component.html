@@ -83,7 +83,7 @@
                         <td class="text-center" style="width: 100px;">{{ index+1 }}</td>
                         <td class="text-left" style="width: 120px;"> {{ item.tutorName }}</td>
                         <td class="text-left" style="width: 120px;"> {{ item.className }}</td>
-                        <td class="text-center" style="width: 120px;"> {{ item.totalStudents }}</td>
+                        <td class="text-center" style="width: 120px"> {{ item.totalStudents }}</td>
                         <td class="text-left" style="width: 120px;"> {{ convertStatus(item.totalStudents) }}</td>
                         <td class="text-center" style="width: 350px; display: flex; justify-content: center">
                             <button class="btn-edit"  (click)="onDetailClass(item.classId)" style="background-color: #98ffb9;">Chi tiết</button> 
