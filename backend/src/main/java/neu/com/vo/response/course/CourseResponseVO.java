@@ -19,5 +19,4 @@ public class CourseResponseVO {
 
         private Long courseGrade;
 
-
 }
