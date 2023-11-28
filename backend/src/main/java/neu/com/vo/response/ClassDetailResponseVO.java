@@ -2,6 +2,7 @@ package neu.com.vo.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import neu.com.model.Course;
 import neu.com.model.Tutor;
 import neu.com.model.ZoomEnrollment;
 import neu.com.vo.response.course.UserResponseVO;
@@ -22,5 +23,8 @@ public class ClassDetailResponseVO {
     @JsonIgnore
     private List<ZoomEnrollment> zoomEnrollments;
     private List<UserResponseVO> students;
+    @JsonIgnore
+    private Course course;
+    private Long courseId;
 
 }
