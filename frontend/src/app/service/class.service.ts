@@ -100,4 +100,67 @@ export class ClassService {
     )
   }
 
+  getWaitList(option: any, callBack: Function){
+    this.http.get(baseUrl + `admin/user/class/${option}`, { observe: 'response', headers: this.headers }).subscribe(
+      response => {
+        if (response.body) {
+          let body: any = Object.assign({}, response.body);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
+  deleteStudent(option: any, callBack: Function): any{
+    this.http.delete(baseUrl + `admin/user/class/${option.classId}/student/${option.userId}`, { observe: 'response', headers: this.headers }).subscribe(
+      response => {
+        if (response.body) {
+          let body: any = Object.assign({}, response.body);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
+  addStudent(option: any, data: any, callBack: Function): any{
+    this.http.put(baseUrl + `admin/user/class/${option}`, data, {observe: 'response', headers: this.headers}).subscribe(
+      response => {
+        if (response.body) {
+          let body: any = Object.assign({}, response.body);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
 }

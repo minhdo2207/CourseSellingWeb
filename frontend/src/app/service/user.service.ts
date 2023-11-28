@@ -170,4 +170,44 @@ export class UserService {
     )
   }
 
+  deleteTransaction(option: any, callBack: Function):any{
+    this.http.delete(baseUrl + `admin/transaction/${option}`, { observe: 'response', headers: this.headers}).subscribe(
+      response => {
+        if (response) {
+          let body: any = Object.assign({}, response);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
+  getAllAll(option: any, callBack: Function): any {
+    let param = {};
+    param = Object.assign({}, option);
+
+    this.http.get(baseUrl + 'admin/user', { observe: 'response', params: param, headers: this.headers }).subscribe(
+      (response) => {
+        if (response.body) {
+          callBack(response.body);
+        }
+      },
+      (error) => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
 }

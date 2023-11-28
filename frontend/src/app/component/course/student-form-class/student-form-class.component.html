@@ -1,0 +1,19 @@
+<div class="overlay" *ngIf="isOpen">
+    <div class="modal">
+        <div>
+            <div class="title-form">Thêm học sinh vào lớp</div>
+            <form (ngSubmit)="onSubmit()" class="my-form">
+                <label for="courseCategory">Chọn học sinh</label>
+                <br />
+                <select id="courseCategory" name="courseCategory" required [(ngModel)]="userId" style="width: 100%; margin-top: 15px;">
+                    <option *ngFor="let item of students" [value]="item.userId">{{ item.userName }}</option>
+                </select>
+                
+                <div class="action-btn">
+                    <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
+                    <button type="submit" class="btn btn-add">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

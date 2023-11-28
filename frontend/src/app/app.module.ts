@@ -33,6 +33,9 @@ import { CourseDetailLessonDetailFormDocumentComponent } from './component/cours
 import { ModalComponent } from './share-ui/modal/modal.component';
 import { LessonFormComponent } from './component/course/course-detail/lesson-form/lesson-form.component';
 import { ClassDetailComponent } from './component/course/course-detail/class-detail/class-detail.component';
+import { MoneyPipe } from './pipe/money.pipe';
+import { StudentListComponent } from './component/course/student-list/student-list.component';
+import { StudentFormClassComponent } from './component/course/student-form-class/student-form-class.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,10 @@ import { ClassDetailComponent } from './component/course/course-detail/class-det
     CourseDetailLessonDetailFormDocumentComponent,
     ModalComponent,
     LessonFormComponent,
-    ClassDetailComponent
+    ClassDetailComponent,
+    MoneyPipe,
+    StudentListComponent,
+    StudentFormClassComponent
   ],
   imports: [
     BrowserModule,

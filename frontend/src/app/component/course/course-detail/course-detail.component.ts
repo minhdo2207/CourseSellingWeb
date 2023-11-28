@@ -117,4 +117,8 @@ export class CourseDetailComponent {
       return 'Đã hết chỗ'
     }
   }
+
+  showListStudent(id: any){
+    this.router.navigate(['/course/detail/student', id]);
+  }
 }

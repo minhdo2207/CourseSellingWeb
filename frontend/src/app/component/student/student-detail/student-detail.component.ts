@@ -63,4 +63,12 @@ export class StudentDetailComponent {
       }
     }, {status: Number(e.target.value)})
   }
+
+  deleteTransaction(id: any){
+    // this.userService.deleteTransaction(id, (res: any) => {
+    //   if(res){
+
+    //   }
+    // })
+  }
 }
