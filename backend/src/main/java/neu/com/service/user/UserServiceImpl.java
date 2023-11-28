@@ -216,9 +216,13 @@ public class UserServiceImpl implements UserService {
         }
 
         zoomEnrollmentRepository.delete(zoomEnrollmentOptional.get());
-//        //Enrollment enrollment = enrollmentOptional.get();
         enrollment.setStatus(0L);
         enrollmentRepository.save(enrollment);
+        //Set class
+        ZoomClass zoomClass = classOptional.get();
+        zoomClass.setClassStatus(((30 - zoomClass.getTotalStudents().intValue()) == 0) ? false : true);
+        zoomClass.setTotalStudents(zoomClass.getTotalStudents() - 1);
+        classRepository.save(zoomClass);
 
         return mapper.map(classRepository.findById(classId).get(), ClassResponseVO.class);
     }
