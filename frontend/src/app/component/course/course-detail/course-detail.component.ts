@@ -37,9 +37,11 @@ export class CourseDetailComponent {
   courseId: any;
   courseData: any;
   statusClass: any = ''
-
-
+  classId: any = ''
+  waitList: Array<any> = []
   ngOnInit() {
+    this.classId = this.route.snapshot.paramMap.get('id');
+
     this.courseId = this.route.snapshot.paramMap.get('id');
     this.getAllData();
   }
@@ -60,6 +62,14 @@ export class CourseDetailComponent {
         this.statusClass = 'đang diễn ra';
       } else {
         this.statusClass = 'đã kết thúc';
+      }
+    })
+
+
+    this.classSrv.getWaitList(this.classId, (res: any) => {
+      if (res) {
+        this.waitList = res.body
+        
       }
     })
   }

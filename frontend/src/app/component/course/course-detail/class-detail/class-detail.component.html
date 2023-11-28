@@ -30,10 +30,12 @@
         </div>
 
         <div style="display: flex; justify-content: space-between;">
-            <select name="type" [(ngModel)]="idShow" (change)="changeTypeList()">
+            <!-- <select name="type" [(ngModel)]="idShow" (change)="changeTypeList()">
                 <option value="1">Danh sách học sinh</option>
                 <option value="2">Danh sách học sinh đang chờ</option>
-            </select>
+            </select> -->
+
+            <div></div>
 
             <button *ngIf="idShow == 1" class="btn btn-add" (click)="openModal()">Thêm học sinh</button>
         </div>
@@ -60,25 +62,7 @@
                 </tr>
             </tbody>
         </table>
-
-        <table class="table-custom" *ngIf="idShow == 2">
-            <thead>
-                <tr class="row">
-                    <th class="text-center" style="width: 200px;">Tên học sinh</th>
-                    <th class="text-center" style="width: 150px;">Số điện thoại</th>
-                    <th class="text-center" style="width: 350px;">Địa chỉ</th>
-                    <th class="text-center" style="width: 350px;">Gmail</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of waitList; let index = index" class="row">
-                    <td class="text-center" style="width: 200px;">{{item.userName}}</td>
-                    <td class="text-center" style="width: 150px;">{{item.userPhone}}</td>
-                    <td class="text-center" style="width: 350px;">{{item.userAddress}}</td>
-                    <td class="text-center" style="width: 350px;">{{item.userEmail}}</td>
-                </tr>
-            </tbody>
-        </table>
+        
     </div>
 </div>
 <app-student-form-class [data]="modalData" [isOpen]="isModalOpen" (closeModal)="onCloseModal()"></app-student-form-class>

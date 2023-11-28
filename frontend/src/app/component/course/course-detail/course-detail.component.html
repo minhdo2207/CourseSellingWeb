@@ -1,8 +1,8 @@
 <div class="container">
     <div class="title">
-        Khóa học - {{courseData.courseTitle}} - {{courseData.courseGrade}}
+        Khóa học - {{courseData?.courseTitle}} - {{courseData?.courseGrade}}
         <span class="tab">
-            {{courseData.courseType == 1 ? 'Khóa video' : 'Khóa meeting'}}
+            {{courseData?.courseType == 1 ? 'Khóa video' : 'Khóa meeting'}}
         </span>
     </div>
 
@@ -10,17 +10,17 @@
         <div class="title-content">Miêu tả khoá học</div>
 
         <div class="content">
-            {{courseData.courseDescriptionText}}
+            {{courseData?.courseDescriptionText}}
         </div>
         <div class="content">
-            {{courseData.courseSubtitle}}
+            {{courseData?.courseSubtitle}}
         </div>
 
         <div class="content">
-            Thời gian bắt đầu: {{courseData.timeStart}}
+            Thời gian bắt đầu: {{courseData?.timeStart}}
         </div>
         <div class="content">
-            Thời gian kết thúc: {{courseData.timeEnd }}
+            Thời gian kết thúc: {{courseData?.timeEnd }}
         </div>
 
         <div class="content"  *ngIf="isShowFormChangeTime">
@@ -48,13 +48,13 @@
         </div>
 
         <div class="out-line-title">
-            <div class="title-content">{{courseData.courseType == 1 ? 'Đề cương' : 'Danh sách Lớp học'}}</div>
+            <div class="title-content">{{courseData?.courseType == 1 ? 'Đề cương' : 'Danh sách Lớp học'}}</div>
             <div class="action-btn">
-                <button class="btn btn-add-chapter" (click)="openModal('Thêm mới chương')" *ngIf="courseData.courseType == 1">
+                <button class="btn btn-add-chapter" (click)="openModal('Thêm mới chương')" *ngIf="courseData?.courseType == 1">
                     Thêm chương
                 </button>
 
-                <button class="btn btn-add-chapter" (click)="openModal('Thêm mới lớp học')" *ngIf="courseData.courseType != 1">
+                <button class="btn btn-add-chapter" (click)="openModal('Thêm mới lớp học')" *ngIf="courseData?.courseType != 1">
                     Thêm lớp học
                 </button>
             </div>
@@ -109,6 +109,30 @@
                             <button class="btn-edit"  (click)="openModal('Chỉnh sửa thông tin',item)">Chỉnh sửa</button> 
                             <button class=" btn-remove" (click)="deleteClass(item.classId)">Xoá lớp</button>
                         </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="title-content">Danh sách học sinh đang chờ</div>
+            <table class="table-custom">
+                <thead>
+                    <tr class="row">
+                        <th class="text-center" style="width: 200px;">Tên học sinh</th>
+                        <th class="text-center" style="width: 150px;">Số điện thoại</th>
+                        <th class="text-center" style="width: 350px;">Địa chỉ</th>
+                        <th class="text-center" style="width: 350px;">Gmail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of waitList; let index = index" class="row">
+                        <td class="text-center" style="width: 200px;">{{item.userName}}</td>
+                        <td class="text-center" style="width: 150px;">{{item.userPhone}}</td>
+                        <td class="text-center" style="width: 350px;">{{item.userAddress}}</td>
+                        <td class="text-center" style="width: 350px;">{{item.userEmail}}</td>
                     </tr>
                 </tbody>
             </table>

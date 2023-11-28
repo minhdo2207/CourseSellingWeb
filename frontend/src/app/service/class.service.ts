@@ -101,7 +101,7 @@ export class ClassService {
   }
 
   getWaitList(option: any, callBack: Function){
-    this.http.get(baseUrl + `admin/user/class/${option}`, { observe: 'response', headers: this.headers }).subscribe(
+    this.http.get(baseUrl + `admin/user/course/${option}`, { observe: 'response', headers: this.headers }).subscribe(
       response => {
         if (response.body) {
           let body: any = Object.assign({}, response.body);
