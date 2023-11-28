@@ -43,6 +43,9 @@ public class UserServiceImpl implements UserService {
     private ClassRepository classRepository;
 
     @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
     PasswordEncoder encoder;
 
     @Override
@@ -228,15 +231,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object getWatingStudent(Long classId) {
-        Optional<ZoomClass> classOptional = classRepository.findById(classId);
-        if (!classOptional.isPresent()) {
-            throw new InvalidInputRequestException("msg_error_class_notfound");
+    public Object getWatingStudent(Long courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (!course.isPresent()) {
+            throw new InvalidInputRequestException("msg_error_course_notfound");
         }
 
         Set<User> users = new HashSet<>();
-        Course course = classOptional.get().getCourse();
-        List<Enrollment> enrollmentList = enrollmentRepository.findAllByCourse(course);
+        List<Enrollment> enrollmentList = enrollmentRepository.findAllByCourse(course.get());
         for (Enrollment e : enrollmentList) {
             if (e.getStatus().equals(0L)) {
                 users.add(e.getUser());

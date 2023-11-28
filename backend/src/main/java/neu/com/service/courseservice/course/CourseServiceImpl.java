@@ -175,8 +175,8 @@ public class CourseServiceImpl implements CourseService {
             throw new InvalidInputRequestException("msg_error_course_notfound");
         }
         Course course = courseOptional.get();
-        Date startDate = new SimpleDateFormat(Constants.FORMAT_DATE_MOBILE_SSO).parse(courseUpdateRequestVO.getCourseStart());
-        Date endDate = new SimpleDateFormat(Constants.FORMAT_DATE_MOBILE_SSO).parse(courseUpdateRequestVO.getCourseEnd());
+        Date startDate = new SimpleDateFormat(Constants.FORMAT_DATE_MOBILE).parse(courseUpdateRequestVO.getCourseStart());
+        Date endDate = new SimpleDateFormat(Constants.FORMAT_DATE_MOBILE).parse(courseUpdateRequestVO.getCourseEnd());
         if (startDate.after(endDate)) {
             throw new InvalidInputRequestException("msg_end_date_must_after_start_date");
         }

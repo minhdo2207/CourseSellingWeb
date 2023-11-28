@@ -100,8 +100,8 @@ public class UserController {
     /**
      * Get waiting student from class
      */
-    @GetMapping("/class/{classId}")
-    public Object getWatingStudent(@PathVariable("classId") Long classId) {
-        return userService.getWatingStudent(classId);
+    @GetMapping("/course/{courseId}")
+    public Object getWatingStudent(@PathVariable("courseId") Long courseId) {
+        return userService.getWatingStudent(courseId);
     }
 }
