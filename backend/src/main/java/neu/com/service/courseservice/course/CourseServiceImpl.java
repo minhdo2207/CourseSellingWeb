@@ -78,7 +78,7 @@ public class CourseServiceImpl implements CourseService {
 
             for (ClassDetailResponseVO classResponseVO : classResponseVOS) {
                 classResponseVO.setTutorName(classResponseVO.getTutor().getUser().getUserName());
-                classResponseVO.setTotalStudents(classRepository.findById(classResponseVO.getClassId()).get().getTotalStudents());
+                //classResponseVO.setTotalStudents(classRepository.findById(classResponseVO.getClassId()).get().getTotalStudents());
             }
 
             meetingCourseDetailResponseVO.setClassVos(classResponseVOS);

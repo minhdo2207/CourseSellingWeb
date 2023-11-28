@@ -276,6 +276,7 @@ public class UserServiceImpl implements UserService {
             //Set class
             ZoomClass zoomClass = classOptional.get();
             zoomClass.setClassStatus(((30 - zoomClass.getTotalStudents().intValue()) == 0) ? false : true);
+            zoomClass.setTotalStudents(zoomClass.getTotalStudents() + 1);
             classRepository.save(zoomClass);
             return mapper.map(zoomClass, ClassResponseVO.class);
         }
