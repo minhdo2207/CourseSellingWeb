@@ -43,7 +43,7 @@
         <tbody >
           <tr *ngFor="let student of students" class="row">
             <td class="text-left" style="width: 170px;">{{ student.courseTitle }}</td>
-            <td class="text-left"  style="width: 150px;"> {{ student.coursePrice }}</td>
+            <td class="text-left"  style="width: 150px;"> {{ formatCurrency(student.coursePrice) }}</td>
             <td class="text-left" style="width: 150px;">
                 {{ student.courseTypeShow }}
             </td>

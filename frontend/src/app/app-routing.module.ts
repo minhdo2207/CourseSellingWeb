@@ -11,6 +11,7 @@ import { CourseDetailLessonDetailComponent } from './component/course/course-det
 import { StudentDetailComponent } from './component/student/student-detail/student-detail.component';
 import { TeacherDetailComponent } from './component/teacher/teacher-detail/teacher-detail.component';
 import { ClassDetailComponent } from './component/course/course-detail/class-detail/class-detail.component';
+import { StudentListComponent } from './component/course/student-list/student-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'course/detail/setup-lesson/:id', component: CourseDetailLessonComponent },
   { path: 'course/detail/setup-lesson/detail/:id', component: CourseDetailLessonDetailComponent },
   { path: 'report/list', component: ReportComponent },
+  { path: 'course/detail/student/:id', component: StudentListComponent}
 ];
 
 @NgModule({
