@@ -23,6 +23,25 @@
             Thời gian kết thúc: {{courseData.timeEnd }}
         </div>
 
+        <div class="content"  *ngIf="isShowFormChangeTime">
+            <div style="margin-bottom: 20px;">
+                Thời gian bắt đầu: <input type="date" [(ngModel)]="timeStartCtrl">
+            </div>
+            <div>
+                Thời gian kết thúc: <input type="date" [(ngModel)]="timeEndCtrl">
+            </div>
+        </div>
+
+        <div class="content">
+            <button *ngIf="!isShowFormChangeTime" (click)="showFormChangeTime()">Thay đổi thời gian</button>
+            <button *ngIf="isShowFormChangeTime" (click)="handleChangeTime()">Thay đổi</button>
+        </div>
+
+
+        <div class="content">
+            Trạng thái: {{statusClass}}
+        </div>
+
         <div class="info-image">
             <img src="../../../../assets/image/image-source.png">
             <!-- <button class="btn btn-change-image">Thay đổi ảnh</button> -->

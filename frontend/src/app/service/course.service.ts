@@ -40,8 +40,66 @@ export class CourseService {
     )
   }
 
+  getAllCourses(callBack: Function) { 
+    this.http.get(baseUrl + 'admin/course?page=-1', { observe: 'response', headers: this.headers }).subscribe(
+      (response) => {
+        if (response.body) {
+          callBack(response.body);
+        }
+      },
+      (error) => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
+  crateTransaction(data: any, acountId: any,courseId: any , callBack?: Function) {
+    this.http.post(baseUrl + `admin/transaction/student/${acountId}/course/${courseId}`, data, { observe: 'response', headers: this.headers }).subscribe(
+      response => {
+        if (response.body) {
+          let body: any = Object.assign({}, response.body);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
   edit(data: any, option?: any, callBack?: Function): any {
     this.http.put(baseUrl + `admin/course/${option}`, data, { observe: 'response', headers: this.headers }).subscribe(
+      response => {
+        if (response.body) {
+          let body: any = Object.assign({}, response.body);
+          if (body) {
+            if (callBack) {
+              callBack(response);
+            }
+          }
+        }
+      },
+      error => {
+        if (callBack) {
+          callBack(null);
+          this.alertSrv.showError('Something went wrong', 'Lỗi!');
+        }
+      }
+    )
+  }
+
+  editTime(data: any, option?: any, callBack?: Function): any {
+    this.http.put(baseUrl + `admin/course/date/${option}`, data, { observe: 'response', headers: this.headers }).subscribe(
       response => {
         if (response.body) {
           let body: any = Object.assign({}, response.body);

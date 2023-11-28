@@ -11,6 +11,7 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class StudentDetailComponent {
   transactionResponseVOS: any[] = [];
+  modalData: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,6 +21,8 @@ export class StudentDetailComponent {
   ) {
 
   }
+
+  danhSachKhoaHocDaTonTai: Array<any>
 
   userId: any;
   userAddress = '';
@@ -40,6 +43,8 @@ export class StudentDetailComponent {
       this.userPhone = res.userPhone;
       this.userEmail = res.userEmail;
       this.userName = res.userName;
+      this.danhSachKhoaHocDaTonTai = res.transactionResponseVOS.map((item:any) => item.courses) as Array<any>
+      
       this.transactionResponseVOS = res.transactionResponseVOS.map((item: any) => {
         let i = item;
 
@@ -71,4 +76,22 @@ export class StudentDetailComponent {
     //   }
     // })
   }
+
+  isModalOpen = false;
+
+  openModal() {
+    this.modalData = {
+        acountId: this.userId,
+        title: 'Thêm học giao dịch mới',
+        type: 'POST'
+    }
+
+    this.isModalOpen = true;
+  }
+
+  onCloseModal() {
+    this.isModalOpen = false;
+    this.getAllData();
+  }
+
 }

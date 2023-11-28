@@ -36,6 +36,7 @@ import { ClassDetailComponent } from './component/course/course-detail/class-det
 import { MoneyPipe } from './pipe/money.pipe';
 import { StudentListComponent } from './component/course/student-list/student-list.component';
 import { StudentFormClassComponent } from './component/course/student-form-class/student-form-class.component';
+import { TransactionFormComponent } from './component/student/student-detail/transaction-form/transaction-form.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { StudentFormClassComponent } from './component/course/student-form-class
     ClassDetailComponent,
     MoneyPipe,
     StudentListComponent,
-    StudentFormClassComponent
+    StudentFormClassComponent,
+    TransactionFormComponent,
   ],
   imports: [
     BrowserModule,

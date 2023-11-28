@@ -20,25 +20,47 @@ export class CourseDetailComponent {
     private alertSrv: AlertService,
     private datePipe: DatePipe,
     private classSrv: ClassService
-    ) {
-    
+  ) {
+
   };
+
+  isShowFormChangeTime: boolean = false;
+
+  // Lấy ngày hiện tại
+  currentDate = new Date();
+  timeStartCtrl = ''
+  timeEndCtrl = ''
+
+
   type: number = 0;
 
   courseId: any;
   courseData: any;
+  statusClass: any = ''
 
-  ngOnInit(){
+
+  ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('id');
     this.getAllData();
   }
 
-  getAllData(){
+  getAllData() {
     this.courseSrv.getDetail(this.courseId, (res: any) => {
       this.courseData = res;
       this.courseData.timeStart = this.datePipe.transform(this.courseData.courseStart, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
       this.courseData.timeEnd = this.datePipe.transform(this.courseData.courseEnd, 'dd/MM/yyyy', 'Asia/Ho_Chi_Minh');
-      console.log(this.courseData);
+
+      // convert status
+      let courseStartDate = new Date(this.courseData.courseStart); //  1703178000000
+      let courseEndDate = new Date(this.courseData.courseEnd); // 1703782800000
+
+      if (this.currentDate < courseStartDate) {
+        this.statusClass = 'sắp khai giảng';
+      } else if (this.currentDate >= courseStartDate && this.currentDate <= courseEndDate) {
+        this.statusClass = 'đang diễn ra';
+      } else {
+        this.statusClass = 'đã kết thúc';
+      }
     })
   }
 
@@ -67,11 +89,11 @@ export class CourseDetailComponent {
   }
 
 
-  openModal2(){
+  openModal2() {
     this.isModalOpen2 = true;
     this.modalData = { /* Your data here */ };
   }
-  
+
   onCloseModal() {
     this.isModalOpen = false;
     this.getAllData();
@@ -88,22 +110,22 @@ export class CourseDetailComponent {
 
   onDetailClass(id: any) {
     console.log(id);
-    
+
     this.router.navigate(['/course/detail/class/', id]);
   }
 
-  deleteChapter(chapterId: any){
+  deleteChapter(chapterId: any) {
     this.chapterSrv.delete(chapterId, (res: any) => {
-      if(res){
+      if (res) {
         this.alertSrv.showSuccess('Xóa thành công', 'Thành công!');
         this.getAllData();
       }
     })
   }
 
-  deleteClass(id: any){
+  deleteClass(id: any) {
     this.classSrv.delete((res: any) => {
-      if(res){
+      if (res) {
         this.alertSrv.showSuccess('Xóa thành công', 'Thành công!');
         this.getAllData();
       }
@@ -112,13 +134,57 @@ export class CourseDetailComponent {
 
   convertStatus(numberStudent: any): string {
     if (30 > numberStudent) {
-      return `Còn ${30 -numberStudent} chỗ`
+      return `Còn ${30 - numberStudent} chỗ`
     } else {
       return 'Đã hết chỗ'
     }
   }
 
-  showListStudent(id: any){
+  showListStudent(id: any) {
     this.router.navigate(['/course/detail/student', id]);
+  }
+
+  showFormChangeTime() {
+    this.isShowFormChangeTime = true;
+  }
+
+  handleChangeTime() {
+    let data = {
+      courseStart: this.convertDateFormat(this.timeStartCtrl),
+      courseEnd: this.convertDateFormat(this.timeEndCtrl)
+    }
+
+    this.courseSrv.editTime(data, this.courseId, (res: any) => {
+      if (res) {
+        this.alertSrv.showSuccess('Cập nhật thời gian thành công', 'Thành công!');
+        this.getAllData();
+      }
+    })
+
+    this.isShowFormChangeTime = false;
+  }
+
+  convertDateFormat(inputDate: any) {
+    // Kiểm tra xem chuỗi đầu vào có tồn tại và có định dạng 'yyyy-mm-dd' không
+    if (!inputDate || !/^\d{4}-\d{2}-\d{2}$/.test(inputDate)) {
+      // Nếu không hợp lệ hoặc null, trả về chuỗi rỗng
+      return '';
+    }
+
+    // Tách năm, tháng, ngày từ chuỗi đầu vào
+    var parts = inputDate.split("-");
+
+    // Tạo đối tượng ngày mới với định dạng mới
+    var newDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+    // Lấy ngày, tháng, năm từ đối tượng ngày mới
+    var day = newDate.getDate();
+    var month = newDate.getMonth() + 1; // Tháng bắt đầu từ 0
+    var year = newDate.getFullYear();
+
+    // Định dạng lại chuỗi theo 'dd-mm-yyyy'
+    var formattedDate = day + "-" + month + "-" + year;
+
+    return formattedDate;
   }
 }
