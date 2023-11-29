@@ -33,7 +33,7 @@
         </div>
 
         <div class="content">
-            <button *ngIf="!isShowFormChangeTime" (click)="showFormChangeTime()">Thay đổi thời gian</button>
+            <button *ngIf="!isShowFormChangeTime" class="btn btn-add" (click)="showFormChangeTime()">Thay đổi thời gian</button>
             <button *ngIf="isShowFormChangeTime" (click)="handleChangeTime()">Thay đổi</button>
         </div>
 
@@ -121,18 +121,18 @@
             <table class="table-custom">
                 <thead>
                     <tr class="row">
-                        <th class="text-center" style="width: 200px;">Tên học sinh</th>
-                        <th class="text-center" style="width: 150px;">Số điện thoại</th>
-                        <th class="text-center" style="width: 350px;">Địa chỉ</th>
-                        <th class="text-center" style="width: 350px;">Gmail</th>
+                        <th class="text-center" style="width: 20%;;">Tên học sinh</th>
+                        <th class="text-center" style="width: 20%;;">Số điện thoại</th>
+                        <th class="text-center" style="width: 30%;;">Địa chỉ</th>
+                        <th class="text-center" style="width: 30%;;">Gmail</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of waitList; let index = index" class="row">
-                        <td class="text-center" style="width: 200px;">{{item.userName}}</td>
-                        <td class="text-center" style="width: 150px;">{{item.userPhone}}</td>
-                        <td class="text-center" style="width: 350px;">{{item.userAddress}}</td>
-                        <td class="text-center" style="width: 350px;">{{item.userEmail}}</td>
+                        <td class="text-center" style="width: 20%;;">{{item.userName}}</td>
+                        <td class="text-center" style="width: 20%;;">{{item.userPhone}}</td>
+                        <td class="text-center" style="width: 30%;;">{{item.userAddress}}</td>
+                        <td class="text-center" style="width: 30%;;">{{item.userEmail}}</td>
                     </tr>
                 </tbody>
             </table>
