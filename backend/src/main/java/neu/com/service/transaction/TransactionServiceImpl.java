@@ -122,6 +122,7 @@ public class TransactionServiceImpl implements TransactionService {
             }
         }
         transaction.setTransactionDate(new SimpleDateFormat(Constants.ISO_DATE_SDF_PATTERN).parse(transactionRequestVO.getTransactionDate()));
+        transaction.setTransactionValue(transactionRequestVO.getTransactionValue());
         transactionRepository.save(transaction);
         return mapper.map(transaction, TransactionResponseVO.class);
     }
