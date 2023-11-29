@@ -121,7 +121,7 @@ export class CourseDetailComponent {
   onDetailClass(id: any) {
     console.log(id);
 
-    this.router.navigate(['/course/detail/class/', id]);
+    this.router.navigate(['/course/detail/class/', id], {queryParams: {courseId: this.courseId}});
   }
 
   deleteChapter(chapterId: any) {

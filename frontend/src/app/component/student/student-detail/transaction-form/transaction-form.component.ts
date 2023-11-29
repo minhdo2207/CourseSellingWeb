@@ -14,6 +14,7 @@ export class TransactionFormComponent {
   @Output() closeModal = new EventEmitter<void>();
   userData: any;
   error: string = '';
+  price = '';
 
   constructor(
     private alertSrv: AlertService,
@@ -21,18 +22,20 @@ export class TransactionFormComponent {
 
   ) { }
 
-  courseId: any;
+  courseId: any = undefined;
   status: any;
 
   courseList: Array<any>
 
   onSubmit() {
-    if (this.courseId == '' || this.status == '') {
+    if (this.price == '') {
+      // console.log(this.price);
       this.alertSrv.showError('Thông tin nhập chưa hợp lệ', 'Lỗi!');
     } else {
       let data = {
         "transactionDate": this.getCurrentDate(),
-        "status": this.status
+        "status": this.status,
+        "transactionValue": this.price
       }
 
       console.log('data', data);
@@ -54,7 +57,7 @@ export class TransactionFormComponent {
     this.courseService.getAllCourses((res: any) => {
       this.courseList = res.elements.filter((element1: any) => !this.danhSachKhoaHocDaTonTai.some(element2 => element1.courseId === element2.courseId))
     })
-    console.log('this.data', this.data);
+    // console.log('this.data', this.data);
 
   }
 
