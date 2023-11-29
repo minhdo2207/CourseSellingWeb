@@ -12,6 +12,7 @@ export class ClassDetailComponent {
   classs: any;
   classId: any;
   waitList: any[] = [];
+  courseId: any;
 
   isModalOpen = false;
   modalData: any;
@@ -22,7 +23,9 @@ export class ClassDetailComponent {
     private alertSrv: AlertService
   ) {
     this.classId = this.route.snapshot.paramMap.get('id');
-    
+    this.route.queryParams.subscribe(param => {
+      this.courseId = param['courseId'];
+    })
   }
 
   cnt = 0;

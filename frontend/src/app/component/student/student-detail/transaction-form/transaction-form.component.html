@@ -22,6 +22,12 @@
                       </select>
                 </div>
 
+                <div class="out-line-ip">
+                    <label for="coursePrice">Số tiền giao dịch</label>
+                    <!-- bỏ đi những id có trên màn -->
+                    <input type="text" [(ngModel)]="price" name="price">
+                </div>
+
                 <div class="action-btn">
                     <button (click)="onCloseModal()" class="btn btn-close">Đóng</button>
                     <button type="submit" class="btn btn-add">Xác nhận</button>

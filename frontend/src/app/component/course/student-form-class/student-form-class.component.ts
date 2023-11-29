@@ -18,6 +18,7 @@ export class StudentFormClassComponent {
 
   userId: any;
   classId: any;
+  courseId: any;
 
   constructor(
     private alertSrv: AlertService,
@@ -25,11 +26,18 @@ export class StudentFormClassComponent {
     private classSrv: ClassService,
     private route: ActivatedRoute
   ) {
-    let option = { roleId: 1, sortDir: 'desc' };
-    this.userSrv.getAllAll(option, (res: any) => {
-      this.students = res.elements;
-    });
+    this.route.queryParams.subscribe(param => {
+      this.courseId = param['courseId'];
+    })
     this.classId = this.route.snapshot.paramMap.get('id');
+    this.classSrv.getWaitList(this.courseId, (res: any) => {
+      this.students = res.body;
+      console.log(this.students);
+    });
+  }
+
+  ngOnInit(){
+    
   }
 
   onSubmit() {
