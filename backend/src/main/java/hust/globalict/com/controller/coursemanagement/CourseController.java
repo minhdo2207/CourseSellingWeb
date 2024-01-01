@@ -1,0 +1,75 @@
+package hust.globalict.com.controller.coursemanagement;
+
+import hust.globalict.com.service.courseservice.course.CourseService;
+import hust.globalict.com.utils.Constants;
+import hust.globalict.com.vo.request.course.CourseCreateRequestVO;
+import hust.globalict.com.vo.request.course.CourseDateRequestVO;
+import jakarta.validation.Valid;
+import hust.globalict.com.vo.request.SortingAndPagingRequestVO;
+import hust.globalict.com.vo.request.course.CourseUpdateRequestVO;
+import hust.globalict.com.vo.request.course.FindCourseRequestVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+
+@RestController
+@RequestMapping(Constants.API_VERSION + "/admin/course")
+public class CourseController {
+    @Autowired
+    private CourseService courseService;
+
+    /**
+     * Get all course
+     * Search by name or type
+     */
+    @GetMapping()
+    public Object getPagingCourse(FindCourseRequestVo findCourseRequestVo, SortingAndPagingRequestVO paging) {
+        return courseService.getPagingCourse(findCourseRequestVo, paging);
+
+    }
+
+    /**
+     * Get course detail by ID
+     */
+
+    @GetMapping("/{courseId}")
+    public Object getCourseDetail(@PathVariable("courseId") Long courseId) {
+        return courseService.getCourseDetail(courseId);
+    }
+
+    /**
+     * Update course
+     */
+
+    @PutMapping("/{courseId}")
+    public Object updateCourse(@Valid @RequestBody CourseUpdateRequestVO courseUpdateRequestVO, @PathVariable("courseId") Long courseId) {
+        return courseService.updateCourse(courseUpdateRequestVO, courseId);
+    }
+
+    @PutMapping("/date/{courseId}")
+    public Object updateDateCourse(@Valid @RequestBody CourseDateRequestVO courseUpdateRequestVO, @PathVariable("courseId") Long courseId) throws ParseException {
+        return courseService.updateDateCourse(courseUpdateRequestVO, courseId);
+    }
+
+
+    /**
+     * Create course
+     */
+
+    @PostMapping()
+    public Object createCourse(@Valid @RequestBody CourseCreateRequestVO courseCreateRequestVORequestVO) {
+        return courseService.createCourse(courseCreateRequestVORequestVO);
+    }
+
+    /**
+     * Delete course
+     */
+
+    @DeleteMapping ("/{courseId}")
+    public Object deleteCourse(@PathVariable("courseId") Long courseId) {
+        return courseService.deleteCourse(courseId);
+    }
+
+
+}
