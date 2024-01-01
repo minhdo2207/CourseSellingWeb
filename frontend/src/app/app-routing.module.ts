@@ -14,7 +14,7 @@ import { ClassDetailComponent } from './component/course/course-detail/class-det
 import { StudentListComponent } from './component/course/student-list/student-list.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: CourseComponent },
   { path: 'student/list', component: StudentComponent },
   { path: 'student/detail/:id', component: StudentDetailComponent },
   { path: 'teacher/list', component: TeacherComponent },
